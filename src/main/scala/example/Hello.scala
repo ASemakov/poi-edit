@@ -1,5 +1,4 @@
 package example
-import models.{Category, PointType, TrustLevel}
 import registration.{CategoryReg, PointTypeReg, RegionReg, TrustLevelReg}
 import slick.jdbc.PostgresProfile.api._
 
