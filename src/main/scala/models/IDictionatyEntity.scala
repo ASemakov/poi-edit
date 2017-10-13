@@ -10,6 +10,15 @@ case class Region(id: Option[Int], name: String) extends IDictionatyEntity
 case class PointType(id: Option[Int], name: String) extends IDictionatyEntity
 case class TrustLevel(id: Option[Int], name: String) extends IDictionatyEntity
 case class Category(id: Option[Int], name: String) extends IDictionatyEntity
+
+case class Kadastr(id: Option[Int], num: Option[String], num2: Option[String], name: Option[String], l: Option[Double],
+                   a: Option[Double], v: Option[Double], regionid: Option[Int], categoryid: Option[Int],
+                   comment: Option[String])
+
+case class Point(id: Option[Int], name: String, lat: BigDecimal, lon: BigDecimal, altitude: Option[BigDecimal],
+                 precision: Option[BigDecimal], description: Option[String], pointtypeid: Int, trustlevelid: Int,
+                 dataid: Option[Int])
+
 /**
 -- Table: public.kadastr
 
