@@ -3,8 +3,7 @@ package registration
 import models.Point
 import slick.jdbc.PostgresProfile.api._
 
-class PointReg(tag: Tag) extends Table[Point](tag, "point") {
-  def id = column[Int]("id", O.PrimaryKey, O.AutoInc) // integer NOT NULL DEFAULT nextval('point_id_seq'::regclass),
+class PointReg(tag: Tag) extends IdTable[Point](tag, "point") {
   def name = column[String]("name", O.Length(14, varying = true)) // character varying(14) NOT NULL,
   def lat = column[BigDecimal]("lat", O.SqlType("NUMERIC(11, 8)")) // numeric(11,8) NOT NULL,
   def lon = column[BigDecimal]("lon", O.SqlType("NUMERIC(11, 8)")) // numeric(11,8) NOT NULL,

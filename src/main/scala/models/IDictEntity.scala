@@ -5,6 +5,6 @@ trait IEntity{
 }
 
 
-trait IDictionatyEntity extends IEntity{
+trait IDictEntity extends IEntity{
   val name: String
 }

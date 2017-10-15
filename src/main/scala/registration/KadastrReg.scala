@@ -3,8 +3,7 @@ package registration
 import models.Kadastr
 import slick.jdbc.PostgresProfile.api._
 
-class KadastrReg(tag: Tag) extends Table[Kadastr](tag, "kadastr") {
-  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+class KadastrReg(tag: Tag) extends IdTable[Kadastr](tag, "kadastr") {
 
   def num = column[Option[String]]("num", O.Length(7, varying = true)) //character varying(7),
   def num2 = column[Option[String]]("num2", O.Length(10, varying = true)) //character varying(10),
