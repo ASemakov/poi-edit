@@ -42,6 +42,10 @@ class KadastrReg(tag: Tag) extends Table[Kadastr](tag, "kadastr") {
   def categoryid = column[Option[Int]]("categoryid")  //integer,
   def comment = column[Option[String]]("comment", O.Length(150, varying = true))  //character varying(150),
 
+  //Foreign keys
+  def region = foreignKey("fk_kadastr_regionid", regionid, TableQuery[RegionReg])(_.id)
+  def category = foreignKey("fk_kadastr_categoryid", categoryid, TableQuery[CategoryReg])(_.id)
+
   def * = (id.?, num, num2, name, l, a, v, regionid, categoryid, comment) <> (Kadastr.tupled, Kadastr.unapply)
 }
 
@@ -56,5 +60,11 @@ class PointReg(tag: Tag) extends Table[Point](tag, "point") {
   def pointtypeid = column[Int]("pointtypeid")  // integer NOT NULL,
   def trustlevelid = column[Int]("trustlevelid")  // integer NOT NULL,
   def dataid = column[Option[Int]]("dataid")  // integer,
+
+  //Foreign keys
+  def pointtype = foreignKey("fk_point_pointtypeid", pointtypeid, TableQuery[PointReg])(_.id)
+  def trustlevel = foreignKey("fk_point_trustlevelid", trustlevelid, TableQuery[TrustLevelReg])(_.id)
+//  def kadastr = foreignKey("", dataid, TableQuery[KadastrReg])(_.id)
+
   def * = (id.?, name, lat, lon, altitude, precision, description, pointtypeid, trustlevelid, dataid) <> (Point.tupled, Point.unapply)
 }
