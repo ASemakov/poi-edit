@@ -1,6 +1,6 @@
 package registration
 
-import models.Kadastr
+import model.Kadastr
 import slick.jdbc.PostgresProfile.api._
 
 class KadastrReg(tag: Tag) extends IdTable[Kadastr](tag, "kadastr") {
@@ -16,9 +16,9 @@ class KadastrReg(tag: Tag) extends IdTable[Kadastr](tag, "kadastr") {
   def comment = column[Option[String]]("comment", O.Length(150, varying = true)) //character varying(150),
 
   //Foreign keys
-  def region = foreignKey("fk_kadastr_regionid", regionid, TableQuery[RegionReg])(_.id)
+  def region = foreignKey("fk_kadastr_regionid", regionid, TableQuery[RegionReg])(_.id.?)
 
-  def category = foreignKey("fk_kadastr_categoryid", categoryid, TableQuery[CategoryReg])(_.id)
+  def category = foreignKey("fk_kadastr_categoryid", categoryid, TableQuery[CategoryReg])(_.id.?)
 
   def * = (id.?, num, num2, name, l, a, v, regionid, categoryid, comment) <> (Kadastr.tupled, Kadastr.unapply)
 }

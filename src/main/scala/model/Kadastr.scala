@@ -1,4 +1,4 @@
-package models
+package model
 
 case class Kadastr(
                     id: Option[Int],

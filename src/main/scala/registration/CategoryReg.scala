@@ -1,6 +1,6 @@
 package registration
 
-import models.Category
+import model.Category
 import slick.jdbc.PostgresProfile.api._
 
 class CategoryReg(tag: Tag) extends IdNameTable[Category](tag, "category"){

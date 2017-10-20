@@ -1,6 +1,6 @@
 package registration
 
-import models.Point
+import model.Point
 import slick.jdbc.PostgresProfile.api._
 
 class PointReg(tag: Tag) extends IdTable[Point](tag, "point") {

@@ -1,6 +1,6 @@
 package registration
 
-import models.IEntity
+import model.IEntity
 import slick.jdbc.PostgresProfile.api._
 
 abstract class IdTable[T <: IEntity](_tableTag: Tag, _schemaName: Option[String], _tableName: String) extends Table[T](_tableTag: Tag, _schemaName: Option[String], _tableName: String){

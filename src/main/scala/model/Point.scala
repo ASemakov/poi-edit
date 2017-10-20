@@ -1,4 +1,4 @@
-package models
+package model
 
 case class Point(
                   id: Option[Int],
