@@ -10,6 +10,7 @@ lazy val root = (project in file(".")).
     name := "PoiEdit",
     libraryDependencies ++= Seq(
       scalaTest % Test,
+      "org.scala-lang" % "scala-reflect" % "2.12.3",
       // Slick framework dependency
       "com.typesafe.slick" %% "slick" % "3.2.1",
       "org.slf4j" % "slf4j-nop" % "1.6.4",
