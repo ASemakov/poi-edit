@@ -19,6 +19,6 @@ lazy val root = (project in file(".")).
       "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
       "com.github.scopt" %% "scopt" % "3.7.0"  // Option parsing
     ),
-    mainClass in (Compile, run) := Some("example.Hello"),
+    mainClass in (Compile, run) := Some("runner.GUI"),
     scalacOptions := Seq("-unchecked", "-deprecation")
   )

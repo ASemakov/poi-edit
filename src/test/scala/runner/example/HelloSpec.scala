@@ -1,4 +1,4 @@
-package example
+package runner.example
 
 import org.scalatest._
 

@@ -1,4 +1,5 @@
-package example
+package runner
+
 import registration._
 import scopt.Read
 import slick.jdbc.PostgresProfile.api._
