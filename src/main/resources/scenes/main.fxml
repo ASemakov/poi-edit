@@ -22,10 +22,18 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView prefHeight="500.0" prefWidth="500.0">
+      <TableView prefHeight="500.0" prefWidth="500.0" fx:id="tableView">
         <columns>
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="C1" />
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="C2" />
+          <TableColumn minWidth="100.0" prefWidth="-1.0" text="id" fx:id="tableColumnId" />
+          <TableColumn minWidth="100.0" prefWidth="-1.0" text="name" fx:id="tableColumnName" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="lat" fx:id="tableColumnLat" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="lon" fx:id="tableColumnLon" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="altitude" fx:id="tableColumnAltitude" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="precision" fx:id="tableColumnPrecision" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="description" fx:id="tableColumnDescription" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="pointtypeid" fx:id="tableColumnPointtypeid" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="trustlevelid" fx:id="tableColumnTrustlevelid" />
+            <TableColumn minWidth="100.0" prefWidth="-1.0" text="dataid" fx:id="tableColumnDataid" />
         </columns>
       </TableView>
    </children>
