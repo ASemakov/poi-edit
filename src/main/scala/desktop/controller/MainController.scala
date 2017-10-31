@@ -2,11 +2,12 @@ package desktop.controller
 
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
-import javafx.scene.control.cell.{PropertyValueFactory, TextFieldTableCell}
+import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.control.{MenuBar, MenuItem, TableColumn, TableView}
 import javafx.stage.Stage
 
 import desktop.model.UiPoint
+import model.{PointType, TrustLevel}
 import repository.PointRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -23,17 +24,17 @@ class MainController(){
   @FXML private var tableColumnAltitude: TableColumn[UiPoint, Option[BigDecimal]] = _
   @FXML private var tableColumnPrecision: TableColumn[UiPoint, Option[BigDecimal]] = _
   @FXML private var tableColumnDescription: TableColumn[UiPoint, Option[String]] = _
-  @FXML private var tableColumnPointtypeid: TableColumn[UiPoint, Int] = _
-  @FXML private var tableColumnTrustlevelid: TableColumn[UiPoint, Int] = _
+  @FXML private var tableColumnPointtype: TableColumn[UiPoint, PointType] = _
+  @FXML private var tableColumnTrustlevel: TableColumn[UiPoint, TrustLevel] = _
   @FXML private var tableColumnDataid: TableColumn[UiPoint, Option[Int]] = _
 
 
   @FXML
   protected def initialize(): Unit = {
-    PointRepository().all().foreach(x => {
-      val data = FXCollections.observableArrayList(x.map(UiPoint.apply): _*)
-      tableView.setItems(data)
-    })
+//    PointTypeRepository().all().foreach(x => {
+//      tableColumnPointtypeid.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableList(x)))
+//    })
+
     tableView.setEditable(true)
 
     tableColumnId.setCellValueFactory(x => x.getValue.idProperty)
@@ -43,12 +44,20 @@ class MainController(){
     tableColumnAltitude.setCellValueFactory(x => x.getValue.altitudeProperty)
     tableColumnPrecision.setCellValueFactory(x => x.getValue.precisionProperty)
     tableColumnDescription.setCellValueFactory(x => x.getValue.descriptionProperty)
-    tableColumnPointtypeid.setCellValueFactory(new PropertyValueFactory[UiPoint, Int]("pointtypeid"))
-    tableColumnTrustlevelid.setCellValueFactory(new PropertyValueFactory[UiPoint, Int]("trustlevelid"))
+
+    tableColumnPointtype.setCellValueFactory(x => x.getValue.pointtypeProperty)
+
+    tableColumnTrustlevel.setCellValueFactory(x => x.getValue.trustlevelProperty)
     tableColumnDataid.setCellValueFactory(x => x.getValue.dataidProperty)
 
     tableColumnName.setCellFactory(TextFieldTableCell.forTableColumn())
     tableColumnName.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).nameProperty.set(x.getNewValue))
+
+
+    PointRepository().allJoined().foreach(x => {
+      val data = FXCollections.observableArrayList(x.map{case(p, t, l) => UiPoint(p, t, l)}: _*)
+      tableView.setItems(data)
+    })
   }
 
   def onMenuCloseClick(): Unit ={

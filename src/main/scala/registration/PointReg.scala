@@ -1,6 +1,6 @@
 package registration
 
-import model.Point
+import model.{Point, PointType}
 import slick.jdbc.PostgresProfile.api._
 
 class PointReg(tag: Tag) extends IdTable[Point](tag, "point") {
@@ -15,10 +15,11 @@ class PointReg(tag: Tag) extends IdTable[Point](tag, "point") {
   def dataid = column[Option[Int]]("dataid") // integer,
 
   //Foreign keys
-  def pointtype = foreignKey("fk_point_pointtypeid", pointtypeid, TableQuery[PointReg])(_.id)
+  def pointtype_fk = foreignKey("fk_point_pointtypeid", pointtypeid, TableQuery[PointTypeReg])(_.id)
 
   def trustlevel = foreignKey("fk_point_trustlevelid", trustlevelid, TableQuery[TrustLevelReg])(_.id)
 
+  //  def pointtype = TableQuery[PointTypeReg].filter(_.id === pointtypeid)
   //  def kadastr = foreignKey("", dataid, TableQuery[KadastrReg])(_.id)
 
   def * = (id.?, name, lat, lon, altitude, precision, description, pointtypeid, trustlevelid, dataid) <> (Point.tupled, Point.unapply)

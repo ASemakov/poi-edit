@@ -1,8 +1,8 @@
 package desktop.model
 
-import javafx.beans.property.{SimpleIntegerProperty, SimpleObjectProperty, SimpleStringProperty}
+import javafx.beans.property.{SimpleObjectProperty, SimpleStringProperty}
 
-import model.Point
+import model.{Point, PointType, TrustLevel}
 
 case class UiPoint
 (
@@ -13,8 +13,8 @@ case class UiPoint
   altitudeProperty: SimpleObjectProperty[Option[BigDecimal]],
   precisionProperty: SimpleObjectProperty[Option[BigDecimal]],
   descriptionProperty: SimpleObjectProperty[Option[String]],
-  pointtypeidProperty: SimpleIntegerProperty,
-  trustlevelidProperty: SimpleIntegerProperty,
+  pointtypeProperty: SimpleObjectProperty[PointType],
+  trustlevelProperty: SimpleObjectProperty[TrustLevel],
   dataidProperty: SimpleObjectProperty[Option[Int]]
 
 ){
@@ -31,8 +31,8 @@ object UiPoint{
     altitude: Option[BigDecimal],
     precision: Option[BigDecimal],
     description: Option[String],
-    pointtypeid: Int,
-    trustlevelid: Int,
+    pointtype: PointType,
+    trustlevel: TrustLevel,
     dataid: Option[Int]
 
   ): UiPoint = UiPoint(
@@ -43,12 +43,12 @@ object UiPoint{
     new SimpleObjectProperty[Option[BigDecimal]](altitude),
     new SimpleObjectProperty[Option[BigDecimal]](precision),
     new SimpleObjectProperty[Option[String]](description),
-    new SimpleIntegerProperty(pointtypeid),
-    new SimpleIntegerProperty(trustlevelid),
+    new SimpleObjectProperty[PointType](pointtype),
+    new SimpleObjectProperty[TrustLevel](trustlevel),
     new SimpleObjectProperty[Option[Int]](dataid)
   )
 
-  def apply(p: Point): UiPoint = UiPoint(
-    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, p.pointtypeid, p.trustlevelid, p.dataid
+  def apply(p: Point, t: PointType, l: TrustLevel): UiPoint = UiPoint(
+    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, p.dataid
   )
 }

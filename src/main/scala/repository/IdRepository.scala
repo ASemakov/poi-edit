@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 trait IdRepository[E <: IEntity, M <: IdTable[E]] {
   protected val db = Database.forConfig("mydb")
   protected def q:TableQuery[M]
-  protected def run(query: => Query[M, E, Seq]): Future[Seq[E]] = db.run(query.result)
+  protected def run[M1, E1](query: => Query[M1, E1, Seq]): Future[Seq[E1]] = db.run(query.result)
 
   def all(): Future[Seq[E]] = run(q)
 
