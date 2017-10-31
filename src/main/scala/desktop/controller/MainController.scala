@@ -2,13 +2,14 @@ package desktop.controller
 
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
-import javafx.scene.control.cell.TextFieldTableCell
+import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control.{MenuBar, MenuItem, TableColumn, TableView}
 import javafx.stage.Stage
+import javafx.util.StringConverter
 
 import desktop.model.UiPoint
 import model.{PointType, TrustLevel}
-import repository.PointRepository
+import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -58,6 +59,27 @@ class MainController(){
       val data = FXCollections.observableArrayList(x.map{case(p, t, l) => UiPoint(p, t, l)}: _*)
       tableView.setItems(data)
     })
+
+    PointTypeRepository().all().foreach(x => {
+      tableColumnPointtype.setCellFactory(
+        ComboBoxTableCell.forTableColumn(new StringConverter[PointType] {
+          def fromString(string: String) = ???
+          def toString(`object`: PointType) = `object`.name
+        }, x: _*)
+      )
+      tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
+    })
+
+    TrustLevelRepository().all().foreach(x => {
+      tableColumnTrustlevel.setCellFactory(
+        ComboBoxTableCell.forTableColumn(new StringConverter[TrustLevel] {
+          def fromString(string: String) = ???
+          def toString(`object`: TrustLevel) = `object`.name
+        }, x: _*)
+      )
+      tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
+    })
+
   }
 
   def onMenuCloseClick(): Unit ={

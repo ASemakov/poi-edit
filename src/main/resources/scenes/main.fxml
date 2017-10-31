@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.controller.MainController">
-   <children>
-      <MenuBar fx:id="menuBar">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#onMenuCloseClick" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TableView prefHeight="500.0" prefWidth="500.0" fx:id="tableView">
-        <columns>
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="id" fx:id="tableColumnId" />
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="name" fx:id="tableColumnName" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="lat" fx:id="tableColumnLat" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="lon" fx:id="tableColumnLon" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="altitude" fx:id="tableColumnAltitude" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="precision" fx:id="tableColumnPrecision" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="description" fx:id="tableColumnDescription" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="pointtypeid" fx:id="tableColumnPointtype" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="trustlevelid" fx:id="tableColumnTrustlevel" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="dataid" fx:id="tableColumnDataid" />
-        </columns>
-      </TableView>
-   </children>
+<?import javafx.scene.layout.VBox?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="desktop.controller.MainController">
+    <children>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="menuItemClose" mnemonicParsing="false" onAction="#onMenuCloseClick"
+                                  text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TableView prefHeight="500.0" prefWidth="500.0" fx:id="tableView">
+            <columns>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="id" fx:id="tableColumnId"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="name" fx:id="tableColumnName"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="lat" fx:id="tableColumnLat"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="lon" fx:id="tableColumnLon"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="altitude" fx:id="tableColumnAltitude"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="precision" fx:id="tableColumnPrecision"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="description" fx:id="tableColumnDescription"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="pointtypeid" fx:id="tableColumnPointtype"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="trustlevelid" fx:id="tableColumnTrustlevel"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="dataid" fx:id="tableColumnDataid"/>
+            </columns>
+        </TableView>
+    </children>
 </VBox>
