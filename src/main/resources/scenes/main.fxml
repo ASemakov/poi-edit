@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" xmlns="http://javafx.com/javafx/8"
       fx:controller="desktop.controller.MainController">
     <children>
         <MenuBar fx:id="menuBar">
@@ -21,9 +21,9 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TableView prefHeight="500.0" prefWidth="500.0" fx:id="tableView">
+        <TableView prefHeight="500.0" prefWidth="500.0" fx:id="tableView" editable="true">
             <columns>
-                <TableColumn minWidth="100.0" prefWidth="-1.0" text="id" fx:id="tableColumnId"/>
+                <TableColumn minWidth="100.0" prefWidth="-1.0" text="id" fx:id="tableColumnId" editable="false"/>
                 <TableColumn minWidth="100.0" prefWidth="-1.0" text="name" fx:id="tableColumnName"/>
                 <TableColumn minWidth="100.0" prefWidth="-1.0" text="lat" fx:id="tableColumnLat"/>
                 <TableColumn minWidth="100.0" prefWidth="-1.0" text="lon" fx:id="tableColumnLon"/>

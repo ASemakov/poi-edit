@@ -1,5 +1,5 @@
 package model
 
-trait IEntity{
+trait IEntity {
   val id: Option[Int]
 }

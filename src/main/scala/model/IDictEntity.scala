@@ -1,5 +1,5 @@
 package model
 
-trait IDictEntity extends IEntity{
+trait IDictEntity extends IEntity {
   val name: String
 }

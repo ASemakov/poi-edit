@@ -17,11 +17,15 @@ case class UiPoint
   trustlevelProperty: SimpleObjectProperty[TrustLevel],
   dataidProperty: SimpleObjectProperty[Option[Int]]
 
-){
+) {
 
 }
 
-object UiPoint{
+object UiPoint {
+  def apply(p: Point, t: PointType, l: TrustLevel): UiPoint = UiPoint(
+    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, p.dataid
+  )
+
   def apply
   (
     id: Option[Int],
@@ -46,9 +50,5 @@ object UiPoint{
     new SimpleObjectProperty[PointType](pointtype),
     new SimpleObjectProperty[TrustLevel](trustlevel),
     new SimpleObjectProperty[Option[Int]](dataid)
-  )
-
-  def apply(p: Point, t: PointType, l: TrustLevel): UiPoint = UiPoint(
-    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, p.dataid
   )
 }

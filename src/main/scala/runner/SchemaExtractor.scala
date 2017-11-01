@@ -8,18 +8,18 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 
-object ExtractorActions extends Enumeration{
+object ExtractorActions extends Enumeration {
   type ExtractorActions = Value
   val create, drop, truncate = Value
 }
 
-case class SchemaExtractorParams(action: ExtractorActions.Value = ExtractorActions.create, execute: Boolean=false)
+case class SchemaExtractorParams(action: ExtractorActions.Value = ExtractorActions.create, execute: Boolean = false)
 
 object SchemaExtractor {
   implicit val extractorActionsRead: Read[ExtractorActions.Value] = scopt.Read.reads(ExtractorActions.withName)
 
   def main(args: Array[String]): Unit = {
-    val parser = new scopt.OptionParser[SchemaExtractorParams]("SchemaExtractor"){
+    val parser = new scopt.OptionParser[SchemaExtractorParams]("SchemaExtractor") {
       head("SchemaExtractor")
       opt[ExtractorActions.Value]('a', "action").action((x, c) => c.copy(action = x))
       opt[Unit]('x', "execute").action((x, c) => c.copy(execute = true))

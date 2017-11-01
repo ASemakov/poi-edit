@@ -4,8 +4,8 @@ import javafx.application.Application
 
 import desktop.Start
 
-object GUI extends App{
-    Application.launch(classOf[Start], args: _*)
+object GUI extends App {
+  Application.launch(classOf[Start], args: _*)
 }
 
 
