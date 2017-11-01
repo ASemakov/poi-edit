@@ -63,8 +63,8 @@ class MainController(){
     PointTypeRepository().all().foreach(x => {
       tableColumnPointtype.setCellFactory(
         ComboBoxTableCell.forTableColumn(new StringConverter[PointType] {
-          def fromString(string: String) = ???
-          def toString(`object`: PointType) = `object`.name
+          def fromString(string: String): Nothing = ???
+          def toString(`object`: PointType): String = `object`.name
         }, x: _*)
       )
       tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
@@ -73,8 +73,8 @@ class MainController(){
     TrustLevelRepository().all().foreach(x => {
       tableColumnTrustlevel.setCellFactory(
         ComboBoxTableCell.forTableColumn(new StringConverter[TrustLevel] {
-          def fromString(string: String) = ???
-          def toString(`object`: TrustLevel) = `object`.name
+          def fromString(string: String): Nothing = ???
+          def toString(`object`: TrustLevel): String = `object`.name
         }, x: _*)
       )
       tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
