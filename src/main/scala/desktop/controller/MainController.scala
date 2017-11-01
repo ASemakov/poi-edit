@@ -8,10 +8,12 @@ import javafx.stage.Stage
 import javafx.util.StringConverter
 
 import desktop.model.UiPoint
-import model.{PointType, TrustLevel}
+import desktop.utils.{IdNameStringConverter, OptionConverter}
+import model.{IDictEntity, PointType, TrustLevel}
 import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+
 
 
 class MainController(){
@@ -38,22 +40,31 @@ class MainController(){
 
     tableView.setEditable(true)
 
+    tableColumnId.setEditable(false)
+
     tableColumnId.setCellValueFactory(x => x.getValue.idProperty)
+    tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionConverter[Int]))
+
     tableColumnName.setCellValueFactory(x => x.getValue.nameProperty)
-    tableColumnLat.setCellValueFactory(x => x.getValue.latProperty)
-    tableColumnLon.setCellValueFactory(x => x.getValue.lonProperty)
-    tableColumnAltitude.setCellValueFactory(x => x.getValue.altitudeProperty)
-    tableColumnPrecision.setCellValueFactory(x => x.getValue.precisionProperty)
-    tableColumnDescription.setCellValueFactory(x => x.getValue.descriptionProperty)
-
-    tableColumnPointtype.setCellValueFactory(x => x.getValue.pointtypeProperty)
-
-    tableColumnTrustlevel.setCellValueFactory(x => x.getValue.trustlevelProperty)
-    tableColumnDataid.setCellValueFactory(x => x.getValue.dataidProperty)
-
     tableColumnName.setCellFactory(TextFieldTableCell.forTableColumn())
     tableColumnName.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).nameProperty.set(x.getNewValue))
 
+    tableColumnLat.setCellValueFactory(x => x.getValue.latProperty)
+    tableColumnLon.setCellValueFactory(x => x.getValue.lonProperty)
+
+    tableColumnAltitude.setCellValueFactory(x => x.getValue.altitudeProperty)
+    tableColumnAltitude.setCellFactory(TextFieldTableCell.forTableColumn(new OptionConverter[BigDecimal]))
+
+    tableColumnPrecision.setCellValueFactory(x => x.getValue.precisionProperty)
+    tableColumnPrecision.setCellFactory(TextFieldTableCell.forTableColumn(new OptionConverter[BigDecimal]))
+
+    tableColumnDescription.setCellValueFactory(x => x.getValue.descriptionProperty)
+    tableColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn(new OptionConverter[String]))
+
+    tableColumnPointtype.setCellValueFactory(x => x.getValue.pointtypeProperty)
+    tableColumnTrustlevel.setCellValueFactory(x => x.getValue.trustlevelProperty)
+    tableColumnDataid.setCellValueFactory(x => x.getValue.dataidProperty)
+    tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionConverter[Int]))
 
     PointRepository().allJoined().foreach(x => {
       val data = FXCollections.observableArrayList(x.map{case(p, t, l) => UiPoint(p, t, l)}: _*)
@@ -61,22 +72,12 @@ class MainController(){
     })
 
     PointTypeRepository().all().foreach(x => {
-      tableColumnPointtype.setCellFactory(
-        ComboBoxTableCell.forTableColumn(new StringConverter[PointType] {
-          def fromString(string: String): Nothing = ???
-          def toString(`object`: PointType): String = `object`.name
-        }, x: _*)
-      )
+      tableColumnPointtype.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[PointType], x: _*))
       tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
     })
 
     TrustLevelRepository().all().foreach(x => {
-      tableColumnTrustlevel.setCellFactory(
-        ComboBoxTableCell.forTableColumn(new StringConverter[TrustLevel] {
-          def fromString(string: String): Nothing = ???
-          def toString(`object`: TrustLevel): String = `object`.name
-        }, x: _*)
-      )
+      tableColumnTrustlevel.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[TrustLevel], x: _*))
       tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
     })
 
