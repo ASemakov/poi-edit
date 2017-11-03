@@ -28,9 +28,30 @@ class MainController() {
   @FXML private var tableColumnTrustlevel: TableColumn[UiPoint, TrustLevel] = _
   @FXML private var tableColumnDataid: TableColumn[UiPoint, Option[Int]] = _
 
-  def onMenuCloseClick(): Unit = {
+  protected def onMenuCloseClick(): Unit = {
     val stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
     stage.close()
+  }
+
+  protected def btnReloadClick(): Unit = {
+    PointRepository().allJoined().foreach(x => {
+      val data = FXCollections.observableArrayList(x.map { case (p, t, l) => UiPoint(p, t, l) }: _*)
+      tableView.setItems(data)
+    })
+
+    PointTypeRepository().all().foreach(x => {
+      tableColumnPointtype.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[PointType], x: _*))
+      // tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
+    })
+
+    TrustLevelRepository().all().foreach(x => {
+      tableColumnTrustlevel.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[TrustLevel], x: _*))
+      // tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
+    })
+  }
+
+  protected def btnSaveClick(): Unit = {
+    println(tableView.getItems.filtered(p => p.isChanged).size())
   }
 
   @FXML
@@ -64,20 +85,7 @@ class MainController() {
     tableColumnDataid.setCellValueFactory(x => x.getValue.dataidProperty)
     tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
 
-    PointRepository().allJoined().foreach(x => {
-      val data = FXCollections.observableArrayList(x.map { case (p, t, l) => UiPoint(p, t, l) }: _*)
-      tableView.setItems(data)
-    })
-
-    PointTypeRepository().all().foreach(x => {
-      tableColumnPointtype.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[PointType], x: _*))
-      // tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
-    })
-
-    TrustLevelRepository().all().foreach(x => {
-      tableColumnTrustlevel.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[TrustLevel], x: _*))
-      // tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
-    })
+    btnReloadClick()
 
   }
 }

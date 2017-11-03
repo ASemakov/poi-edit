@@ -16,9 +16,16 @@ case class UiPoint
   pointtypeProperty: SimpleObjectProperty[PointType],
   trustlevelProperty: SimpleObjectProperty[TrustLevel],
   dataidProperty: SimpleObjectProperty[Option[Int]]
-
 ) {
 
+  private def currentValues = (
+    nameProperty.get(), latProperty.get(), lonProperty.get(), altitudeProperty.get(), precisionProperty.get(),
+    descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), dataidProperty.get()
+  )
+  private val original = currentValues
+
+  def isChanged: Boolean = currentValues != original
+  def isNew: Boolean = idProperty.get().isEmpty
 }
 
 object UiPoint {
