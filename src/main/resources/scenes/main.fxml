@@ -43,6 +43,7 @@
         <items>
             <Button mnemonicParsing="false" onAction="#btnReloadClick" text="Reload" />
             <Button mnemonicParsing="false" onAction="#btnSaveClick" text="Save" />
+            <Button mnemonicParsing="false" onAction="#btnAddClick" text="New item" />
         </items>
       </ToolBar>
     </children>

@@ -54,6 +54,15 @@ class MainController() {
     println(tableView.getItems.filtered(p => p.isChanged).size())
   }
 
+  protected def btnAddClick(): Unit = {
+    PointTypeRepository().getById(1).flatMap(
+      pt => TrustLevelRepository().getById(1).map(pt -> _)
+    ).foreach{ case (t, l) =>
+      tableView.getItems.add(UiPoint(None, "name", 0, 0, None, None, None, t.get, l.get, None))
+    }
+  }
+
+
   @FXML
   protected def initialize(): Unit = {
 
