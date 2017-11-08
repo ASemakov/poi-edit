@@ -17,6 +17,12 @@ trait IdRepository[E <: IEntity, M <: IdTable[E]] {
 
   def getById(id: Int): Future[Option[E]] = run(q.filter(_.id === id)).map(_.headOption)
 
+  def save(entity: E): Future[E] = {
+    val value = (q returning q).insertOrUpdate(entity)
+    val eventualSeq: Future[Option[E]] = db.run(value)
+    eventualSeq.map(_.getOrElse(entity))
+  }
+
   protected def q: TableQuery[M]
 }
 
