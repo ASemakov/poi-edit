@@ -44,24 +44,24 @@ class MainController() {
 
     PointTypeRepository().all().foreach(x => {
       tableColumnPointtype.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[PointType], x: _*))
-      // tableColumnPointtype.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).pointtypeProperty.set(x.getNewValue))
     })
 
     TrustLevelRepository().all().foreach(x => {
       tableColumnTrustlevel.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[TrustLevel], x: _*))
-      // tableColumnTrustlevel.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).trustlevelProperty.set(x.getNewValue))
     })
   }
 
   protected def btnSaveClick(): Unit = {
     val changedPoints = tableView.getItems.filtered(p => p.isChanged || p.isNew)
     val points: Array[UiPoint] = changedPoints.toArray(new Array[UiPoint](changedPoints.size()))
+    // TODO: Add confirmation dialog
     Future.sequence(points.toList.map(u => PointRepository().save(u.asPoint)))
       .andThen{case Success(v) => btnReloadClick()}
   }
 
   protected def btnDeleteClick(): Unit = {
     val items = tableView.getSelectionModel.getSelectedItems
+    // TODO: Add confirmation dialog
     Future.sequence(items.toArray(new Array[UiPoint](items.size())).toList.map(u => PointRepository().delete(u.asPoint)))
       .andThen{case Success(v) => btnReloadClick()}
   }
@@ -73,7 +73,6 @@ class MainController() {
       tableView.getItems.add(UiPoint(None, "name", 0, 0, None, None, None, t.get, l.get, None))
     }
   }
-
 
   @FXML
   protected def initialize(): Unit = {
@@ -107,6 +106,5 @@ class MainController() {
     tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
 
     btnReloadClick()
-
   }
 }
