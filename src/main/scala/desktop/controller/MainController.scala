@@ -1,6 +1,7 @@
 package desktop.controller
 
 import javafx.collections.FXCollections
+import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control.{MenuBar, TableColumn, TableView}
@@ -12,6 +13,8 @@ import model.{PointType, TrustLevel}
 import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.util.Success
 
 
 class MainController() {
@@ -51,7 +54,16 @@ class MainController() {
   }
 
   protected def btnSaveClick(): Unit = {
-    println(tableView.getItems.filtered(p => p.isChanged).size())
+    val changedPoints = tableView.getItems.filtered(p => p.isChanged || p.isNew)
+    val points: Array[UiPoint] = changedPoints.toArray(new Array[UiPoint](changedPoints.size()))
+    Future.sequence(points.toList.map(u => PointRepository().save(u.asPoint)))
+      .andThen{case Success(v) => btnReloadClick()}
+  }
+
+  protected def btnDeleteClick(): Unit = {
+    val items = tableView.getSelectionModel.getSelectedItems
+    Future.sequence(items.toArray(new Array[UiPoint](items.size())).toList.map(u => PointRepository().delete(u.asPoint)))
+      .andThen{case Success(v) => btnReloadClick()}
   }
 
   protected def btnAddClick(): Unit = {

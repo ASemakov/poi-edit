@@ -26,6 +26,10 @@ case class UiPoint
 
   def isChanged: Boolean = currentValues != original
   def isNew: Boolean = idProperty.get().isEmpty
+
+  def asPoint: Point = Point(idProperty.get(), nameProperty.get(), latProperty.get, lonProperty.get(),
+    altitudeProperty.get(), precisionProperty.get(), descriptionProperty.get(), pointtypeProperty.get().id.get,
+    trustlevelProperty.get().id.get, dataidProperty.get())
 }
 
 object UiPoint {

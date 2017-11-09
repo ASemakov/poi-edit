@@ -1,4 +1,4 @@
-package registration
+package repository.registration
 
 import model.Region
 import slick.jdbc.PostgresProfile.api._

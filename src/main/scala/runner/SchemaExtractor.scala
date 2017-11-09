@@ -1,6 +1,6 @@
 package runner
 
-import registration._
+import repository.registration._
 import scopt.Read
 import slick.jdbc.PostgresProfile.api._
 

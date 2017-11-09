@@ -1,4 +1,4 @@
-package registration
+package repository.registration
 
 import model.Point
 import slick.jdbc.PostgresProfile.api._
