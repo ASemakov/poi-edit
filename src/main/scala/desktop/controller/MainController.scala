@@ -3,8 +3,9 @@ package desktop.controller
 import javafx.collections.FXCollections
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
+import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
-import javafx.scene.control.{MenuBar, TableColumn, TableView}
+import javafx.scene.control._
 import javafx.stage.Stage
 
 import desktop.model.UiPoint
@@ -53,17 +54,36 @@ class MainController() {
 
   protected def btnSaveClick(): Unit = {
     val changedPoints = tableView.getItems.filtered(p => p.isChanged || p.isNew)
-    val points: Array[UiPoint] = changedPoints.toArray(new Array[UiPoint](changedPoints.size()))
-    // TODO: Add confirmation dialog
-    Future.sequence(points.toList.map(u => PointRepository().save(u.asPoint)))
-      .andThen{case Success(v) => btnReloadClick()}
+    val points = changedPoints.toArray(new Array[UiPoint](changedPoints.size())).toList
+    if (points.isEmpty){
+      return
+    }
+    val alert = new Alert(AlertType.CONFIRMATION,
+      s"Are you sure to save ${points.length} item(s) (${points.count(_.idProperty.get().isEmpty)} new)",
+      ButtonType.OK, ButtonType.CANCEL)
+    alert.showAndWait()
+    if (alert.getResult == ButtonType.OK) {
+      Future.sequence(points.map(u => PointRepository().save(u.asPoint)))
+        .andThen { case Success(_) => btnReloadClick() }
+    }
   }
 
   protected def btnDeleteClick(): Unit = {
     val items = tableView.getSelectionModel.getSelectedItems
-    // TODO: Add confirmation dialog
-    Future.sequence(items.toArray(new Array[UiPoint](items.size())).toList.map(u => PointRepository().delete(u.asPoint)))
-      .andThen{case Success(v) => btnReloadClick()}
+    val itemsList = items.toArray(new Array[UiPoint](items.size())).toList
+    if (itemsList.isEmpty){
+      return
+    }
+
+    val alert = new Alert(
+      AlertType.CONFIRMATION,
+      s"Are you sure to delete ${itemsList.length} item(s): ${itemsList.flatMap(_.idProperty.get()).map(_.toString).mkString(", ")}",
+      ButtonType.OK, ButtonType.CANCEL)
+    alert.showAndWait()
+    if (alert.getResult == ButtonType.OK) {
+      Future.sequence(itemsList.map(u => PointRepository().delete(u.asPoint)))
+        .andThen { case Success(_) => btnReloadClick() }
+    }
   }
 
   protected def btnAddClick(): Unit = {
