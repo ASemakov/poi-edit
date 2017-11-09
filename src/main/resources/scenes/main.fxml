@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -12,7 +9,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.controller.MainController">
     <children>
         <MenuBar fx:id="menuBar">
             <menus>
@@ -32,10 +29,14 @@
             <columns>
                 <TableColumn fx:id="tableColumnId" editable="false" minWidth="100.0" prefWidth="-1.0" text="id" />
                 <TableColumn fx:id="tableColumnName" minWidth="100.0" prefWidth="-1.0" text="name" />
-                <TableColumn fx:id="tableColumnLat" minWidth="100.0" prefWidth="-1.0" text="lat" />
-                <TableColumn fx:id="tableColumnLon" minWidth="100.0" prefWidth="-1.0" text="lon" />
-                <TableColumn fx:id="tableColumnAltitude" minWidth="100.0" prefWidth="-1.0" text="altitude" />
-                <TableColumn fx:id="tableColumnPrecision" minWidth="100.0" prefWidth="-1.0" text="precision" />
+            <TableColumn prefWidth="75.0" text="position">
+               <columns>
+                      <TableColumn fx:id="tableColumnLat" minWidth="100.0" prefWidth="-1.0" text="lat" />
+                      <TableColumn fx:id="tableColumnLon" minWidth="100.0" prefWidth="-1.0" text="lon" />
+                      <TableColumn fx:id="tableColumnAltitude" minWidth="100.0" prefWidth="-1.0" text="altitude" />
+                      <TableColumn fx:id="tableColumnPrecision" minWidth="100.0" prefWidth="-1.0" text="precision" />
+               </columns>
+            </TableColumn>
                 <TableColumn fx:id="tableColumnDescription" minWidth="100.0" prefWidth="-1.0" text="description" />
                 <TableColumn fx:id="tableColumnPointtype" minWidth="100.0" prefWidth="-1.0" text="pointtypeid" />
                 <TableColumn fx:id="tableColumnTrustlevel" minWidth="100.0" prefWidth="-1.0" text="trustlevelid" />
