@@ -1,5 +1,8 @@
 package runner
 
+//import scalaxb._
+//import generated._
+//import scala.xml.XML
 import model.{Category, PointType, Region, TrustLevel}
 import repository._
 import slick.jdbc.PostgresProfile.api._
@@ -11,6 +14,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 object Hello {
 
   def main(args: Array[String]) = {
+//    val xml = XML.loadFile("/home/asemakov/projects/poi-edit/sample_data/20150505_karabi.gpx")
+//    val pr = fromXML[GpxType](xml)
     val db = Database.forConfig("mydb")
 
     Await.result(Future.sequence(Seq(

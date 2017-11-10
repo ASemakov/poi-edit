@@ -1,6 +1,7 @@
 import Dependencies._
 
 lazy val root = (project in file(".")).
+  enablePlugins(ScalaxbPlugin).
   settings(
     inThisBuild(List(
       organization := "man.asemakov",
@@ -11,6 +12,10 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
       scalaTest % Test,
       "org.scala-lang" % "scala-reflect" % "2.12.3",
+      // Scalaxb dependency
+      "org.scala-lang.modules" %% "scala-xml" % "1.0.6",
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
+      // END: Scalaxb dependency
       // Slick framework dependency
       "com.typesafe.slick" %% "slick" % "3.2.1",
       "org.slf4j" % "slf4j-nop" % "1.6.4",
@@ -19,6 +24,7 @@ lazy val root = (project in file(".")).
       "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
       "com.github.scopt" %% "scopt" % "3.7.0"  // Option parsing
     ),
-    mainClass in (Compile, run) := Some("runner.GUI"),
+    mainClass in (Compile, run) := Some("runner.GUI"),  // Main class to start
+    scalaxbPackageName in (Compile, scalaxb) := "scalaxb.generated",
     scalacOptions := Seq("-unchecked", "-deprecation")
   )
