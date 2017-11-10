@@ -96,6 +96,7 @@ class MainController() {
 
   @FXML
   protected def initialize(): Unit = {
+    tableView.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 
     tableColumnId.setCellValueFactory(x => x.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
