@@ -1,4 +1,4 @@
-package desktop.utils
+package desktop.utils.converters
 
 class OptionStringConverter extends OptionConverter[String] {
   override def fromString(string: String): Option[String] = {

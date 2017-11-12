@@ -1,5 +1,6 @@
 package desktop.controller
 
+import java.io.File
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Alert.AlertType
@@ -9,12 +10,15 @@ import javafx.stage.{FileChooser, Stage}
 
 import desktop.model.UiPoint
 import desktop.utils._
+import desktop.utils.converters._
 import model.{PointType, TrustLevel}
 import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Success
+
+
 
 
 class MainController() {
@@ -34,10 +38,7 @@ class MainController() {
   def stage: Stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
 
   protected def onMenuImportGpxClick(): Unit = {
-    val fc = new FileChooser()
-    fc.setTitle("Import GPX file")
-    fc.getExtensionFilters.add(new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx"))
-    Option(fc.showOpenDialog(stage)) match {
+    FileChoosers.selectGpxFile(stage) match {
       case Some(f) =>
         val points = GPXRepository(f).readWpt()
         println(s"imported ${points.size} points")

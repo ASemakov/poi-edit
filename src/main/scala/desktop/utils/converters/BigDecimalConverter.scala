@@ -1,4 +1,4 @@
-package desktop.utils
+package desktop.utils.converters
 
 import javafx.util.StringConverter
 

@@ -1,4 +1,4 @@
-package desktop.utils
+package desktop.utils.converters
 
 class OptionBigDecimalConverter extends OptionConverter[BigDecimal] {
   override def fromString(string: String): Option[BigDecimal] = {
