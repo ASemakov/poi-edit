@@ -5,60 +5,50 @@
 <?import javafx.scene.layout.*?>
 <AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="desktop.controller.ImportController">
-    <children>
-        <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <items>
-                <AnchorPane>
-                    <children>
-                        <TableView fx:id="tableGpx" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" editable="true">
-                            <columns>
-                                <TableColumn fx:id="tableGpxColumnId" editable="false" minWidth="100.0" prefWidth="-1.0"
-                                             text="id"/>
-                                <TableColumn fx:id="tableGpxColumnName" minWidth="100.0" prefWidth="-1.0" text="name"/>
-                                <TableColumn prefWidth="75.0" text="position">
-                                    <columns>
-                                        <TableColumn fx:id="tableGpxColumnLat" minWidth="100.0" prefWidth="-1.0"
-                                                     text="lat"/>
-                                        <TableColumn fx:id="tableGpxColumnLon" minWidth="100.0" prefWidth="-1.0"
-                                                     text="lon"/>
-                                        <TableColumn fx:id="tableGpxColumnAltitude" minWidth="100.0" prefWidth="-1.0"
-                                                     text="altitude"/>
-                                        <TableColumn fx:id="tableGpxColumnPrecision" minWidth="100.0" prefWidth="-1.0"
-                                                     text="precision"/>
-                                    </columns>
-                                </TableColumn>
-                                <TableColumn fx:id="tableGpxColumnDescription" minWidth="100.0" prefWidth="-1.0"
-                                             text="description"/>
-                                <TableColumn fx:id="tableGpxColumnPointtype" minWidth="100.0" prefWidth="-1.0"
-                                             text="pointtypeid"/>
-                                <TableColumn fx:id="tableGpxColumnTrustlevel" minWidth="100.0" prefWidth="-1.0"
-                                             text="trustlevelid"/>
-                                <TableColumn fx:id="tableGpxColumnDataid" minWidth="100.0" prefWidth="-1.0"
-                                             text="dataid"/>
-                            </columns>
-                        </TableView>
-                    </children>
-                </AnchorPane>
-                <AnchorPane>
-                    <children>
-                        <TableView fx:id="tableMatch" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-        <HBox maxHeight="35.0" minHeight="35.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" spacing="10.0"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-            <children>
-                <Button mnemonicParsing="false" onAction="#btnCloseClick" text="Close"/>
-
-                <Button mnemonicParsing="false" onAction="#btnImportClick" text="Import"/>
-            </children>
-            <padding>
-                <Insets top="4.0"/>
-            </padding>
-        </HBox>
-    </children>
+  <children>
+    <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <items>
+        <AnchorPane>
+          <children>
+            <TableView fx:id="tableGpx" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" editable="true">
+              <columns>
+                <TableColumn fx:id="tableGpxColumnId" editable="false" minWidth="100.0" prefWidth="-1.0" text="id"/>
+                <TableColumn fx:id="tableGpxColumnName" minWidth="100.0" prefWidth="-1.0" text="name"/>
+                <TableColumn prefWidth="75.0" text="position">
+                  <columns>
+                    <TableColumn fx:id="tableGpxColumnLat" minWidth="100.0" prefWidth="-1.0" text="lat"/>
+                    <TableColumn fx:id="tableGpxColumnLon" minWidth="100.0" prefWidth="-1.0" text="lon"/>
+                    <TableColumn fx:id="tableGpxColumnAltitude" minWidth="100.0" prefWidth="-1.0" text="altitude"/>
+                    <TableColumn fx:id="tableGpxColumnPrecision" minWidth="100.0" prefWidth="-1.0" text="precision"/>
+                  </columns>
+                </TableColumn>
+                <TableColumn fx:id="tableGpxColumnDescription" minWidth="100.0" prefWidth="-1.0" text="description"/>
+                <TableColumn fx:id="tableGpxColumnPointtype" minWidth="100.0" prefWidth="-1.0" text="pointtypeid"/>
+                <TableColumn fx:id="tableGpxColumnTrustlevel" minWidth="100.0" prefWidth="-1.0" text="trustlevelid"/>
+                <TableColumn fx:id="tableGpxColumnDataid" minWidth="100.0" prefWidth="-1.0" text="dataid"/>
+              </columns>
+            </TableView>
+          </children>
+        </AnchorPane>
+        <AnchorPane>
+          <children>
+            <TableView fx:id="tableMatch" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+    <HBox maxHeight="35.0" minHeight="35.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" spacing="10.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <children>
+        <Button mnemonicParsing="false" onAction="#btnCloseClick" text="Close"/>
+        <Button mnemonicParsing="false" onAction="#btnImportClick" text="Import"/>
+      </children>
+      <padding>
+        <Insets top="4.0"/>
+      </padding>
+    </HBox>
+  </children>
 </AnchorPane>
