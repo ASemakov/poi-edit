@@ -1,17 +1,16 @@
 package desktop.controller
 
 import javafx.collections.FXCollections
-import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control._
+import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.stage.{FileChooser, Stage}
 
 import desktop.model.UiPoint
 import desktop.utils._
 import model.{PointType, TrustLevel}
-import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -37,8 +36,11 @@ class MainController() {
   protected def onMenuImportGpxClick(): Unit = {
     val fc = new FileChooser()
     fc.setTitle("Import GPX file")
+    fc.getExtensionFilters.add(new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx"))
     Option(fc.showOpenDialog(stage)) match {
-      case Some(f) => println("openFile")
+      case Some(f) =>
+        val points = GPXRepository(f).readWpt()
+        println(s"imported ${points.size} points")
       case None => println("no file specified")
     }
   }

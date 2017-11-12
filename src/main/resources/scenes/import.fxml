@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.controller.ImportController">
+   <children>
+        <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <items>
+               <AnchorPane>
+                  <children>
+                      <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  </children>
+               </AnchorPane>
+               <AnchorPane>
+                  <children>
+                      <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  </children>
+               </AnchorPane>
+           </items>
+        </SplitPane>
+        <HBox maxHeight="35.0" minHeight="35.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+           <children>
+               <Button mnemonicParsing="false" text="Button">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+           </children>
+         <padding>
+            <Insets top="4.0" />
+         </padding>
+        </HBox>
+   </children>
+</AnchorPane>
