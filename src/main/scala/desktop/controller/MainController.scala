@@ -6,7 +6,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control._
-import javafx.stage.Stage
+import javafx.stage.{FileChooser, Stage}
 
 import desktop.model.UiPoint
 import desktop.utils._
@@ -32,8 +32,18 @@ class MainController() {
   @FXML private var tableColumnTrustlevel: TableColumn[UiPoint, TrustLevel] = _
   @FXML private var tableColumnDataid: TableColumn[UiPoint, Option[Int]] = _
 
+  def stage: Stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
+
+  protected def onMenuImportGpxClick(): Unit = {
+    val fc = new FileChooser()
+    fc.setTitle("Import GPX file")
+    Option(fc.showOpenDialog(stage)) match {
+      case Some(f) => println("openFile")
+      case None => println("no file specified")
+    }
+  }
+
   protected def onMenuCloseClick(): Unit = {
-    val stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
     stage.close()
   }
 
