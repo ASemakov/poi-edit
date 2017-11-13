@@ -4,18 +4,20 @@ import javafx.beans.property.{SimpleObjectProperty, SimpleStringProperty}
 
 import model.{Point, PointType, TrustLevel}
 
-case class UiPoint
+
+
+class UiPoint
 (
-  idProperty: SimpleObjectProperty[Option[Int]],
-  nameProperty: SimpleStringProperty,
-  latProperty: SimpleObjectProperty[BigDecimal],
-  lonProperty: SimpleObjectProperty[BigDecimal],
-  altitudeProperty: SimpleObjectProperty[Option[BigDecimal]],
-  precisionProperty: SimpleObjectProperty[Option[BigDecimal]],
-  descriptionProperty: SimpleObjectProperty[Option[String]],
-  pointtypeProperty: SimpleObjectProperty[PointType],
-  trustlevelProperty: SimpleObjectProperty[TrustLevel],
-  dataidProperty: SimpleObjectProperty[Option[Int]]
+  val idProperty: SimpleObjectProperty[Option[Int]],
+  val nameProperty: SimpleStringProperty,
+  val latProperty: SimpleObjectProperty[BigDecimal],
+  val lonProperty: SimpleObjectProperty[BigDecimal],
+  val altitudeProperty: SimpleObjectProperty[Option[BigDecimal]],
+  val precisionProperty: SimpleObjectProperty[Option[BigDecimal]],
+  val descriptionProperty: SimpleObjectProperty[Option[String]],
+  val pointtypeProperty: SimpleObjectProperty[PointType],
+  val trustlevelProperty: SimpleObjectProperty[TrustLevel],
+  val dataidProperty: SimpleObjectProperty[Option[Int]]
 ) {
 
   private def currentValues = (
@@ -50,7 +52,7 @@ object UiPoint {
     trustlevel: TrustLevel,
     dataid: Option[Int]
 
-  ): UiPoint = UiPoint(
+  ): UiPoint = new UiPoint(
     new SimpleObjectProperty[Option[Int]](id),
     new SimpleStringProperty(name),
     new SimpleObjectProperty[BigDecimal](lat),
@@ -63,3 +65,5 @@ object UiPoint {
     new SimpleObjectProperty[Option[Int]](dataid)
   )
 }
+
+

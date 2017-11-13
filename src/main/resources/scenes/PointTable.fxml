@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="TableView" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" editable="true">
+        <columns>
+            <TableColumn fx:id="tableColumnId" editable="false" minWidth="100.0" prefWidth="-1.0" text="id"/>
+            <TableColumn fx:id="tableColumnName" minWidth="100.0" prefWidth="-1.0" text="name"/>
+            <TableColumn prefWidth="75.0" text="position">
+                <columns>
+                    <TableColumn fx:id="tableColumnLat" minWidth="100.0" prefWidth="-1.0" text="lat"/>
+                    <TableColumn fx:id="tableColumnLon" minWidth="100.0" prefWidth="-1.0" text="lon"/>
+                    <TableColumn fx:id="tableColumnAltitude" minWidth="100.0" prefWidth="-1.0" text="altitude"/>
+                    <TableColumn fx:id="tableColumnPrecision" minWidth="100.0" prefWidth="-1.0" text="precision"/>
+                </columns>
+            </TableColumn>
+            <TableColumn fx:id="tableColumnDescription" minWidth="100.0" prefWidth="-1.0" text="description"/>
+            <TableColumn fx:id="tableColumnPointtype" minWidth="100.0" prefWidth="-1.0" text="pointtypeid"/>
+            <TableColumn fx:id="tableColumnTrustlevel" minWidth="100.0" prefWidth="-1.0" text="trustlevelid"/>
+            <TableColumn fx:id="tableColumnDataid" minWidth="100.0" prefWidth="-1.0" text="dataid"/>
+        </columns>
+</fx:root>
