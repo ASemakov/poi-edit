@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
 <?import desktop.controller.controls.PointTable?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="desktop.controller.MainController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="desktop.controller.MainController">
     <children>
-        <MenuBar fx:id="menuBar">
+        <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -22,9 +23,12 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <PointTable fx:id="tableView"/>
-        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
-            <items>
+        <PointTable fx:id="tableView" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0"/>
+        <ToolBar maxHeight="35.0" minHeight="35.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <items>
                 <Button mnemonicParsing="false" onAction="#btnReloadClick" text="Reload"/>
                 <Button mnemonicParsing="false" onAction="#btnDeleteClick" text="Delete selected"/>
                 <Button mnemonicParsing="false" onAction="#btnSaveClick" text="Save"/>
@@ -32,4 +36,4 @@
             </items>
         </ToolBar>
     </children>
-</VBox>
+</AnchorPane>
