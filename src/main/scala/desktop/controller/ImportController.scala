@@ -5,6 +5,7 @@ import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 
+import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.UiPoint
 import desktop.utils.FileChoosers
 import repository.{GPXRepository, PointTypeRepository, TrustLevelRepository}
@@ -13,7 +14,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class ImportController {
   @FXML private var mainPane: AnchorPane = _
-  @FXML private var tblGpx: PointTable = _
+  @FXML private var tblGpx: PointTable[UiPoint] = _
+  @FXML private var tableMatch: PointDistantiatedTable = _
+
 
   def stage: Stage = mainPane.getScene.getWindow.asInstanceOf[Stage]
 

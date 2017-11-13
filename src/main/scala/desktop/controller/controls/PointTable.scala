@@ -1,29 +1,28 @@
-package desktop.controller;
+package desktop.controller.controls
 
 import java.io.IOException
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control.{SelectionMode, TableColumn, TableView}
-import javafx.scene.layout.AnchorPane
 
 import desktop.model.UiPoint
 import desktop.utils.converters._
 import model.{PointType, TrustLevel}
 
-class PointTable extends TableView[UiPoint] {
-  @FXML def tableView: TableView[UiPoint] = this
-  @FXML private var tableColumnId: TableColumn[UiPoint, Option[Int]] = _
-  @FXML private var tableColumnName: TableColumn[UiPoint, String] = _
-  @FXML private var tableColumnLat: TableColumn[UiPoint, BigDecimal] = _
-  @FXML private var tableColumnLon: TableColumn[UiPoint, BigDecimal] = _
-  @FXML private var tableColumnAltitude: TableColumn[UiPoint, Option[BigDecimal]] = _
-  @FXML private var tableColumnPrecision: TableColumn[UiPoint, Option[BigDecimal]] = _
-  @FXML private var tableColumnDescription: TableColumn[UiPoint, Option[String]] = _
-  @FXML private var tableColumnPointtype: TableColumn[UiPoint, PointType] = _
-  @FXML private var tableColumnTrustlevel: TableColumn[UiPoint, TrustLevel] = _
-  @FXML private var tableColumnDataid: TableColumn[UiPoint, Option[Int]] = _
+class PointTable[T <: UiPoint] extends TableView[T] {
+  @FXML def tableView: TableView[T] = this
+  @FXML private var tableColumnId: TableColumn[T, Option[Int]] = _
+  @FXML private var tableColumnName: TableColumn[T, String] = _
+  @FXML private var tableColumnLat: TableColumn[T, BigDecimal] = _
+  @FXML private var tableColumnLon: TableColumn[T, BigDecimal] = _
+  @FXML private var tableColumnAltitude: TableColumn[T, Option[BigDecimal]] = _
+  @FXML private var tableColumnPrecision: TableColumn[T, Option[BigDecimal]] = _
+  @FXML private var tableColumnDescription: TableColumn[T, Option[String]] = _
+  @FXML private var tableColumnPointtype: TableColumn[T, PointType] = _
+  @FXML private var tableColumnTrustlevel: TableColumn[T, TrustLevel] = _
+  @FXML private var tableColumnDataid: TableColumn[T, Option[Int]] = _
 
-  private val fxmlLoader = new FXMLLoader(getClass.getResource("/scenes/PointTable.fxml"))
+  private val fxmlLoader = new FXMLLoader(getClass.getResource("/fxml/controls/PointTable.fxml"))
   fxmlLoader.setRoot(this)
   fxmlLoader.setController(this)
 
@@ -45,32 +44,32 @@ class PointTable extends TableView[UiPoint] {
   def initialize() = {
     tableView.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 
-    tableColumnId.setCellValueFactory(x => x.getValue.idProperty)
+    tableColumnId.setCellValueFactory(_.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
 
-    tableColumnName.setCellValueFactory(x => x.getValue.nameProperty)
+    tableColumnName.setCellValueFactory(_.getValue.nameProperty)
     tableColumnName.setCellFactory(TextFieldTableCell.forTableColumn())
     tableColumnName.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).nameProperty.set(x.getNewValue))
 
-    tableColumnLat.setCellValueFactory(x => x.getValue.latProperty)
+    tableColumnLat.setCellValueFactory(_.getValue.latProperty)
     tableColumnLat.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalConverter))
 
-    tableColumnLon.setCellValueFactory(x => x.getValue.lonProperty)
+    tableColumnLon.setCellValueFactory(_.getValue.lonProperty)
     tableColumnLon.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalConverter))
 
-    tableColumnAltitude.setCellValueFactory(x => x.getValue.altitudeProperty)
+    tableColumnAltitude.setCellValueFactory(_.getValue.altitudeProperty)
     tableColumnAltitude.setCellFactory(TextFieldTableCell.forTableColumn(new OptionBigDecimalConverter))
 
-    tableColumnPrecision.setCellValueFactory(x => x.getValue.precisionProperty)
+    tableColumnPrecision.setCellValueFactory(_.getValue.precisionProperty)
     tableColumnPrecision.setCellFactory(TextFieldTableCell.forTableColumn(new OptionBigDecimalConverter))
 
-    tableColumnDescription.setCellValueFactory(x => x.getValue.descriptionProperty)
+    tableColumnDescription.setCellValueFactory(_.getValue.descriptionProperty)
     tableColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
 
-    tableColumnPointtype.setCellValueFactory(x => x.getValue.pointtypeProperty)
-    tableColumnTrustlevel.setCellValueFactory(x => x.getValue.trustlevelProperty)
+    tableColumnPointtype.setCellValueFactory(_.getValue.pointtypeProperty)
+    tableColumnTrustlevel.setCellValueFactory(_.getValue.trustlevelProperty)
 
-    tableColumnDataid.setCellValueFactory(x => x.getValue.dataidProperty)
+    tableColumnDataid.setCellValueFactory(_.getValue.dataidProperty)
     tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
   }
 }

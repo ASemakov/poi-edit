@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType
 import javafx.scene.control._
 import javafx.stage.Stage
 
+import desktop.controller.controls.PointTable
 import desktop.model.UiPoint
 import desktop.utils._
 import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
@@ -15,11 +16,9 @@ import scala.concurrent.Future
 import scala.util.Success
 
 
-
-
 class MainController() {
   @FXML private var menuBar: MenuBar = _
-  @FXML private var tableView: PointTable = _
+  @FXML private var tableView: PointTable[UiPoint] = _
 
   def stage: Stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
 

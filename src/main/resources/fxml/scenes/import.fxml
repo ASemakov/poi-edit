@@ -3,8 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import desktop.controller.PointTable?>
+<?import desktop.controller.controls.PointTable?>
 
+<?import desktop.controller.controls.PointDistantiatedTable?>
 <AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="desktop.controller.ImportController">
   <children>
@@ -18,7 +19,7 @@
         </AnchorPane>
         <AnchorPane>
           <children>
-            <TableView fx:id="tableMatch" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+            <PointDistantiatedTable fx:id="tableMatch" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
           </children>
         </AnchorPane>

@@ -16,7 +16,7 @@ class UiPointDistantiated
   pointtypeProperty: SimpleObjectProperty[PointType],
   trustlevelProperty: SimpleObjectProperty[TrustLevel],
   dataidProperty: SimpleObjectProperty[Option[Int]],
-  distance: SimpleObjectProperty[BigDecimal]
+  val distance: SimpleObjectProperty[BigDecimal]
 ) extends UiPoint(idProperty, nameProperty, latProperty, lonProperty, altitudeProperty, precisionProperty, descriptionProperty, pointtypeProperty,
   trustlevelProperty, dataidProperty){
 }
