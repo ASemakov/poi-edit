@@ -2,38 +2,60 @@
 
 <?import desktop.controller.controls.PointTable?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="desktop.controller.MainController">
-    <children>
-        <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuImportGpxClick" text="Import gpx file ..."/>
-                        <MenuItem mnemonicParsing="false" onAction="#onMenuCloseClick" text="Close"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <PointTable fx:id="tableView" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0"/>
-        <ToolBar maxHeight="35.0" minHeight="35.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-
-        <items>
-                <Button mnemonicParsing="false" onAction="#btnReloadClick" text="Reload"/>
-                <Button mnemonicParsing="false" onAction="#btnDeleteClick" text="Delete selected"/>
-                <Button mnemonicParsing="false" onAction="#btnSaveClick" text="Save"/>
-                <Button mnemonicParsing="false" onAction="#btnAddClick" text="New item"/>
-            </items>
-        </ToolBar>
-    </children>
+  <children>
+    <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#btnReloadClick" text="Reload DB">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#btnSaveClick" text="Save">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onMenuImportGpxClick" text="Import gpx file ...">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onMenuCloseClick" text="Close">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Add" onAction="#btnAddClick">
+              <accelerator>
+                <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Delete" onAction="#btnDeleteClick">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About"/>
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <PointTable fx:id="tableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0"/>
+  </children>
 </AnchorPane>

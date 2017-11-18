@@ -2,14 +2,12 @@ package desktop.controller
 
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
-import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.{Alert, ButtonType}
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 
 import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.{UiPoint, UiPointDistantiated}
-import desktop.utils.FileChoosers
+import desktop.utils.{FileChoosers, WindowUtils}
 import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,11 +38,14 @@ class ImportController {
             case (Some(t), Some(l)) =>
               val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l)): _*)
               tableGpx.tableView.setItems(value)
-              tableGpx.getSelectionModel.select(0)
+              if (!value.isEmpty) {
+                tableGpx.getSelectionModel.select(0)
+              }
+
             case _ => println("No reference items were found")
           }
 
-      case None =>
+      case None => onMenuCloseClick()
     }
   }
 
@@ -53,17 +54,17 @@ class ImportController {
   }
 
   def onMenuSaveClick(): Unit = {
-
-    val fResult = Future.sequence(
-      tableGpx.getItems
-        .toArray(new Array[UiPoint](tableGpx.getItems.size()))
-        .toList
-        .map(x => PointRepository().save(x.asPoint))
-    )
-    val items = Await.result(fResult, Duration.Inf)
-    tableGpx.getItems.clear()
-    val alert = new Alert(AlertType.INFORMATION, s"${items.size} items were saved.", ButtonType.OK)
-    alert.showAndWait()
+    val itemsList = tableGpx.getItems.toArray(new Array[UiPoint](tableGpx.getItems.size())).toList
+    if (WindowUtils.confirmation(s"Are you sure to save ${itemsList.size} items (${itemsList.count(_.idProperty.get.isDefined)} new)?")) {
+      val items = Await.result(
+        Future.sequence(
+          itemsList.map(x => PointRepository().save(x.asPoint)
+          )
+        ), Duration.Inf
+      )
+      tableGpx.getItems.clear()
+      onMenuCloseClick()
+    }
   }
 
   def onMenuAssociateClick(): Unit = {
@@ -88,11 +89,13 @@ class ImportController {
   }
 
   def onMenuDeleteClick(): Unit = {
-    if (Option(tableGpx.getSelectionModel.getSelectedItem).isEmpty){
+    if (Option(tableGpx.getSelectionModel.getSelectedItem).isEmpty) {
       return
     }
     tableGpx.getItems.remove(tableGpx.getSelectionModel.getSelectedItem)
-    tableGpx.getSelectionModel.select(0)
+    if (tableGpx.getItems.size() > 0) {
+      tableGpx.getSelectionModel.select(0)
+    }
   }
 
   @FXML
@@ -104,7 +107,9 @@ class ImportController {
             .topNByDistance(item.latProperty.get(), item.lonProperty.get(), 10)
             .foreach(s => {
               tableMatch.getItems.setAll(s.map { case (p, t, l, d) => UiPointDistantiated(p, t, l, d) }: _*)
-              tableMatch.getSelectionModel.select(0)
+              if (s.nonEmpty) {
+                tableMatch.getSelectionModel.select(0)
+              }
             })
         case None =>
           tableMatch.getItems.clear()

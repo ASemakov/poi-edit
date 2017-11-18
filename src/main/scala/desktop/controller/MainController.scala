@@ -2,14 +2,13 @@ package desktop.controller
 
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
-import javafx.scene.control.Alert.AlertType
 import javafx.scene.control._
 import javafx.stage.Stage
 
 import desktop.controller.controls.PointTable
 import desktop.model.UiPoint
 import desktop.utils._
-import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -23,12 +22,8 @@ class MainController() {
   def stage: Stage = menuBar.getScene.getWindow.asInstanceOf[Stage]
 
   protected def onMenuImportGpxClick(): Unit = {
-    FileChoosers.selectGpxFile(stage) match {
-      case Some(f) =>
-        val points = GPXRepository(f).readWpt()
-        println(s"imported ${points.size} points")
-      case None => println("no file specified")
-    }
+    val ctrl = WindowUtils.createStage[ImportController](stage, getClass.getResource("/fxml/scenes/import.fxml"))
+    ctrl.onMenuImportGpxClick()
   }
 
   protected def onMenuCloseClick(): Unit = {
@@ -39,6 +34,9 @@ class MainController() {
     PointRepository().allJoined().foreach(x => {
       val data = FXCollections.observableArrayList(x.map { case (p, t, l) => UiPoint(p, t, l) }: _*)
       tableView.setItems(data)
+      if(!data.isEmpty) {
+        tableView.getSelectionModel.select(0)
+      }
     })
 
     PointTypeRepository().all().foreach(x => {
@@ -53,14 +51,10 @@ class MainController() {
   protected def btnSaveClick(): Unit = {
     val changedPoints = tableView.getItems.filtered(p => p.isChanged || p.isNew)
     val points = changedPoints.toArray(new Array[UiPoint](changedPoints.size())).toList
-    if (points.isEmpty){
+    if (points.isEmpty) {
       return
     }
-    val alert = new Alert(AlertType.CONFIRMATION,
-      s"Are you sure to save ${points.length} item(s) (${points.count(_.idProperty.get().isEmpty)} new)",
-      ButtonType.OK, ButtonType.CANCEL)
-    alert.showAndWait()
-    if (alert.getResult == ButtonType.OK) {
+    if (WindowUtils.confirmation(s"Are you sure to save ${points.length} item(s) (${points.count(_.idProperty.get().isEmpty)} new)")) {
       Future.sequence(points.map(u => PointRepository().save(u.asPoint)))
         .andThen { case Success(_) => btnReloadClick() }
     }
@@ -69,16 +63,10 @@ class MainController() {
   protected def btnDeleteClick(): Unit = {
     val items = tableView.getSelectionModel.getSelectedItems
     val itemsList = items.toArray(new Array[UiPoint](items.size())).toList
-    if (itemsList.isEmpty){
+    if (itemsList.isEmpty) {
       return
     }
-
-    val alert = new Alert(
-      AlertType.CONFIRMATION,
-      s"Are you sure to delete ${itemsList.length} item(s): ${itemsList.flatMap(_.idProperty.get()).map(_.toString).mkString(", ")}",
-      ButtonType.OK, ButtonType.CANCEL)
-    alert.showAndWait()
-    if (alert.getResult == ButtonType.OK) {
+    if (WindowUtils.confirmation(s"Are you sure to delete ${itemsList.length} item(s): ${itemsList.flatMap(_.idProperty.get()).map(_.toString).mkString(", ")}")) {
       Future.sequence(itemsList.map(u => PointRepository().delete(u.asPoint)))
         .andThen { case Success(_) => btnReloadClick() }
     }
@@ -87,7 +75,7 @@ class MainController() {
   protected def btnAddClick(): Unit = {
     PointTypeRepository().getById(1).flatMap(
       pt => TrustLevelRepository().getById(1).map(pt -> _)
-    ).foreach{ case (t, l) =>
+    ).foreach { case (t, l) =>
       tableView.getItems.add(UiPoint(None, "name", 0, 0, None, None, None, t.get, l.get, None))
     }
   }

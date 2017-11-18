@@ -7,9 +7,3 @@ class BigDecimalConverter extends StringConverter[BigDecimal] {
 
   override def fromString(string: String) = BigDecimal(string)
 }
-
-class DoubleConverter extends StringConverter[Double] {
-  override def toString(`object`: Double) = `object`.toString()
-
-  override def fromString(string: String) = string.toDouble
-}
