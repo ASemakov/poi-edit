@@ -40,6 +40,7 @@ class ImportController {
             case (Some(t), Some(l)) =>
               val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l)): _*)
               tableGpx.tableView.setItems(value)
+              tableGpx.getSelectionModel.select(0)
             case _ => println("No reference items were found")
           }
 
@@ -66,7 +67,7 @@ class ImportController {
   }
 
   def onMenuAssociateClick(): Unit = {
-    if (Option(tableGpx.getSelectionModel).isEmpty || Option(tableMatch.getSelectionModel).isEmpty){
+    if (Option(tableGpx.getSelectionModel).isEmpty || Option(tableMatch.getSelectionModel).isEmpty) {
       return
     }
     val g = tableGpx.getSelectionModel.getSelectedItem
@@ -80,10 +81,18 @@ class ImportController {
   }
 
   def onMenuDeassociateClick(): Unit = {
-    if (Option(tableGpx.getSelectionModel).isEmpty){
+    if (Option(tableGpx.getSelectionModel).isEmpty) {
       return
     }
     tableGpx.getSelectionModel.getSelectedItem.idProperty.set(None)
+  }
+
+  def onMenuDeleteClick(): Unit = {
+    if (Option(tableGpx.getSelectionModel.getSelectedItem).isEmpty){
+      return
+    }
+    tableGpx.getItems.remove(tableGpx.getSelectionModel.getSelectedItem)
+    tableGpx.getSelectionModel.select(0)
   }
 
   @FXML

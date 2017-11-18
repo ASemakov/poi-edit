@@ -41,6 +41,11 @@
                 <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="UP"/>
               </accelerator>
             </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onMenuDeleteClick" text="Delete Item">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
