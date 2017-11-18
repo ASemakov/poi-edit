@@ -5,20 +5,20 @@ import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.control.{SelectionMode, TableColumn}
 
 import desktop.model.UiPointDistantiated
-import desktop.utils.converters.BigDecimalConverter
+import desktop.utils.converters.{BigDecimalConverter, DoubleConverter}
 
 class PointDistantiatedTable extends PointTable[UiPointDistantiated] {
-  private var tableColumnDistance: TableColumn[UiPointDistantiated, BigDecimal] = _
+  private var tableColumnDistance: TableColumn[UiPointDistantiated, Double] = _
 
   @FXML
   override def initialize() = {
-    tableColumnDistance = new TableColumn[UiPointDistantiated, BigDecimal]("distance")
+    tableColumnDistance = new TableColumn[UiPointDistantiated, Double]("distance")
     super.initialize()
     tableView.getSelectionModel.setSelectionMode(SelectionMode.SINGLE)
     tableView.setEditable(false)
 
-    tableColumnDistance.setCellValueFactory(_.getValue.distance)
-    tableColumnDistance.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalConverter))
+    tableColumnDistance.setCellValueFactory(x => x.getValue.distanceProperty)
+    tableColumnDistance.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleConverter))
 
     tableView.getColumns.add(0, tableColumnDistance)
   }

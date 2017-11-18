@@ -1,6 +1,6 @@
 package desktop.model
 
-import javafx.beans.property.{SimpleObjectProperty, SimpleStringProperty}
+import javafx.beans.property.{DoubleProperty, SimpleDoubleProperty, SimpleObjectProperty, SimpleStringProperty}
 
 import model.{Point, PointType, TrustLevel}
 
@@ -16,14 +16,14 @@ class UiPointDistantiated
   pointtypeProperty: SimpleObjectProperty[PointType],
   trustlevelProperty: SimpleObjectProperty[TrustLevel],
   dataidProperty: SimpleObjectProperty[Option[Int]],
-  val distance: SimpleObjectProperty[BigDecimal]
+  val distanceProperty: SimpleObjectProperty[Double]
 ) extends UiPoint(idProperty, nameProperty, latProperty, lonProperty, altitudeProperty, precisionProperty, descriptionProperty, pointtypeProperty,
   trustlevelProperty, dataidProperty){
 }
 
 
 object UiPointDistantiated {
-  def apply(p: Point, t: PointType, l: TrustLevel, distance: BigDecimal): UiPointDistantiated = UiPointDistantiated(
+  def apply(p: Point, t: PointType, l: TrustLevel, distance: Double): UiPointDistantiated = UiPointDistantiated(
     p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, p.dataid, distance
   )
 
@@ -39,7 +39,7 @@ object UiPointDistantiated {
     pointtype: PointType,
     trustlevel: TrustLevel,
     dataid: Option[Int],
-    distance: BigDecimal
+    distance: Double
 
   ): UiPointDistantiated = new UiPointDistantiated(
     new SimpleObjectProperty[Option[Int]](id),
@@ -52,6 +52,6 @@ object UiPointDistantiated {
     new SimpleObjectProperty[PointType](pointtype),
     new SimpleObjectProperty[TrustLevel](trustlevel),
     new SimpleObjectProperty[Option[Int]](dataid),
-    new SimpleObjectProperty[BigDecimal](distance)
+    new SimpleObjectProperty[Double](distance)
   )
 }
