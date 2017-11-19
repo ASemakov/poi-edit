@@ -1,5 +1,6 @@
 package desktop.controller
 
+import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control._
@@ -12,7 +13,7 @@ import repository.{ExportRepository, PointRepository, PointTypeRepository, Trust
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.Success
+import scala.util.{Failure, Success}
 
 
 class MainController() {
@@ -40,7 +41,18 @@ class MainController() {
   def btnRestoreClick(): Unit = {
     if (WindowUtils.confirmation("Are you sure that you want to restore data from file?")) {
       FileChoosers.selectRestoreFile(stage) match {
-        case Some(file) => ExportRepository(file).restore()
+        case Some(file) => ExportRepository(file).restore().andThen {
+          case Success(r) =>
+            Platform.runLater(() => {
+              WindowUtils.information("Import was successful.")
+              btnReloadClick()
+            }
+            )
+          case Failure(ex) =>
+            Platform.runLater(() => {
+              WindowUtils.error(s"Import failed: ${ex}")
+            })
+        }
         case None =>
       }
     }

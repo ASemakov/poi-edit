@@ -27,7 +27,7 @@ case class ExportRepository(file: File) {
       val ex = ExportObject(category, region, pointType, trustLevel, kadastr, point)
       file.createNewFile()
       val writer = new FileWriter(file)
-      writer.write(JSON.write(ex))
+      writer.write(JSON.writePretty(ex))
       writer.close()
       file
     }
@@ -36,12 +36,12 @@ case class ExportRepository(file: File) {
   def restore(): Future[File] = {
     val export = JSON.read[ExportObject](file)
     for {
-      _ <- CategoryRepository().saveAll(export.category)
-      _ <- RegionRepository().saveAll(export.region)
-      _ <- PointTypeRepository().saveAll(export.pointType)
-      _ <- TrustLevelRepository().saveAll(export.trustLevel)
-      _ <- KadastrRepository().saveAll(export.kadastr)
-      _ <- PointRepository().saveAll(export.point)
+      _ <- CategoryRepository().insertAll(export.category)
+      _ <- RegionRepository().insertAll(export.region)
+      _ <- PointTypeRepository().insertAll(export.pointType)
+      _ <- TrustLevelRepository().insertAll(export.trustLevel)
+      _ <- KadastrRepository().insertAll(export.kadastr)
+      _ <- PointRepository().insertAll(export.point)
     } yield file
   }
 }

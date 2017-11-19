@@ -13,6 +13,11 @@ object WindowUtils {
     alert.showAndWait()
   }
 
+  def error(msg: String): Unit = {
+    val alert = new Alert(AlertType.ERROR, msg, ButtonType.OK)
+    alert.showAndWait()
+  }
+
   def confirmation(msg: String): Boolean = {
     val alert = new Alert(AlertType.CONFIRMATION, msg, ButtonType.OK, ButtonType.CANCEL)
     alert.showAndWait()
