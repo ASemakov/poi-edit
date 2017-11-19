@@ -8,7 +8,7 @@ import javafx.stage.Stage
 import desktop.controller.controls.PointTable
 import desktop.model.UiPoint
 import desktop.utils._
-import repository.{PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{ExportRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -30,11 +30,27 @@ class MainController() {
     stage.close()
   }
 
+  def btnBackupClick(): Unit = {
+    FileChoosers.selectBackupFile(stage) match {
+      case Some(file) => ExportRepository(file).backup()
+      case None =>
+    }
+  }
+
+  def btnRestoreClick(): Unit = {
+    if (WindowUtils.confirmation("Are you sure that you want to restore data from file?")) {
+      FileChoosers.selectRestoreFile(stage) match {
+        case Some(file) => ExportRepository(file).restore()
+        case None =>
+      }
+    }
+  }
+
   protected def btnReloadClick(): Unit = {
     PointRepository().allJoined().foreach(x => {
       val data = FXCollections.observableArrayList(x.map { case (p, t, l) => UiPoint(p, t, l) }: _*)
       tableView.setItems(data)
-      if(!data.isEmpty) {
+      if (!data.isEmpty) {
         tableView.getSelectionModel.select(0)
       }
     })

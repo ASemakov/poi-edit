@@ -48,6 +48,20 @@
             </MenuItem>
           </items>
         </Menu>
+        <Menu mnemonicParsing="false" text="DB Actions">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Backup" onAction="#btnBackupClick">
+              <accelerator>
+                <KeyCodeCombination alt="DOWN" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Restore" onAction="#btnRestoreClick">
+              <accelerator>
+                <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" text="About"/>

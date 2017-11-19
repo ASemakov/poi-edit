@@ -23,6 +23,8 @@ trait IdRepository[E <: IEntity, M <: IdTable[E]] {
     eventualSeq.map(_.getOrElse(entity))
   }
 
+  def saveAll(entities: Seq[E]): Future[Seq[E]] = Future.sequence(entities.map(save))
+
   def delete(entity: E): Future[Boolean] ={
     // Returns number of affected rows
     val eventualInt: Future[Int] = db.run(q.filter(_.id === entity.id).delete)
@@ -31,17 +33,3 @@ trait IdRepository[E <: IEntity, M <: IdTable[E]] {
 
   protected def q: TableQuery[M]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

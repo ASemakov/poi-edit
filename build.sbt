@@ -22,8 +22,9 @@ lazy val root = (project in file(".")).
       "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1",
       // END: Slick framework dependency
       "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
-      "com.github.scopt" %% "scopt" % "3.7.0"  // Option parsing
-    ),
+      "com.github.scopt" %% "scopt" % "3.7.0",  // Option parsing
+      "org.json4s" %% "json4s-native" % "3.5.3"  // JSON parsing
+),
     mainClass in (Compile, run) := Some("runner.GUI"),  // Main class to start
     scalaxbPackageName in (Compile, scalaxb) := "scalaxb.generated",
     scalacOptions := Seq("-unchecked", "-deprecation")
