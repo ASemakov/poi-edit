@@ -41,7 +41,7 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
   @FXML
   def initialize() = {
-    tableView.getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+    getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
 
     tableColumnId.setCellValueFactory(_.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))

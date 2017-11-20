@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<fx:root type="TableView" xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml" editable="true">
+        <columns>
+            <TableColumn fx:id="tableColumnId" editable="false" minWidth="100.0" prefWidth="-1.0" text="Id"/>
+            <TableColumn fx:id="tableColumnNum" editable="false" minWidth="100.0" prefWidth="-1.0" text="Num"/>
+            <TableColumn fx:id="tableColumnNum2" editable="false" minWidth="100.0" prefWidth="-1.0" text="Num2"/>
+            <TableColumn fx:id="tableColumnName" editable="false" minWidth="100.0" prefWidth="-1.0" text="Name"/>
+            <TableColumn fx:id="tableColumnLength" editable="false" minWidth="100.0" prefWidth="-1.0" text="Length"/>
+            <TableColumn fx:id="tableColumnAmplitude" editable="false" minWidth="100.0" prefWidth="-1.0" text="Amplitude"/>
+            <TableColumn fx:id="tableColumnVolume" editable="false" minWidth="100.0" prefWidth="-1.0" text="Volume"/>
+            <TableColumn fx:id="tableColumnRegion" editable="false" minWidth="100.0" prefWidth="-1.0" text="Region"/>
+            <TableColumn fx:id="tableColumnCategory" editable="false" minWidth="100.0" prefWidth="-1.0" text="Category"/>
+            <TableColumn fx:id="tableColumnComment" editable="false" minWidth="100.0" prefWidth="-1.0" text="Comment"/>
+        </columns>
+</fx:root>

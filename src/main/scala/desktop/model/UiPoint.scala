@@ -5,7 +5,6 @@ import javafx.beans.property.{SimpleObjectProperty, SimpleStringProperty}
 import model.{Point, PointType, TrustLevel}
 
 
-
 class UiPoint
 (
   val idProperty: SimpleObjectProperty[Option[Int]],
@@ -24,9 +23,11 @@ class UiPoint
     nameProperty.get(), latProperty.get(), lonProperty.get(), altitudeProperty.get(), precisionProperty.get(),
     descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), dataidProperty.get()
   )
+
   private val original = currentValues
 
   def isChanged: Boolean = currentValues != original
+
   def isNew: Boolean = idProperty.get().isEmpty
 
   def asPoint: Point = Point(idProperty.get(), nameProperty.get(), latProperty.get, lonProperty.get(),

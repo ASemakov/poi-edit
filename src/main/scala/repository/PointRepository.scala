@@ -32,14 +32,18 @@ case class PointRepository() extends IdRepository[Point, PointReg] {
     )
       .map(_
         .map { case (p, t, l) => (
-          p, t, l, Math.acos(
-          Math.sin((lat * Math.PI / 180).toDouble) * Math.sin((p.lat * Math.PI / 180.0).toDouble)
-            + Math.cos((lat * Math.PI / 180).toDouble) * Math.cos((p.lat * Math.PI / 180.0).toDouble) * Math.cos(((lon - p.lon) * Math.PI / 180).toDouble)
-        ) * 6371000.0)
+          p, t, l, calcDistance(lat, lon, p.lat, p.lon))
         }
         .sortBy { case (p, t, l, d) => d }
         .take(count)
       )
     r
+  }
+
+  private def calcDistance(lat: BigDecimal, lon: BigDecimal, lat2: BigDecimal, lon2: BigDecimal) = {
+    Math.acos(
+      Math.sin((lat * Math.PI / 180).toDouble) * Math.sin((lat2 * Math.PI / 180.0).toDouble)
+        + Math.cos((lat * Math.PI / 180).toDouble) * Math.cos((lat2 * Math.PI / 180.0).toDouble) * Math.cos(((lon - lon2) * Math.PI / 180).toDouble)
+    ) * 6371000.0
   }
 }
