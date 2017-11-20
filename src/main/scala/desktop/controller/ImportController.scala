@@ -37,7 +37,7 @@ class ImportController {
           .map {
             case (Some(t), Some(l)) =>
               val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l)): _*)
-              tableGpx.tableView.setItems(value)
+              tableGpx.setItems(value)
               if (!value.isEmpty) {
                 tableGpx.getSelectionModel.select(0)
               }

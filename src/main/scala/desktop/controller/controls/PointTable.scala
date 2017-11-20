@@ -10,7 +10,6 @@ import desktop.utils.converters._
 import model.{PointType, TrustLevel}
 
 class PointTable[T <: UiPoint] extends TableView[T] {
-  @FXML def tableView: TableView[T] = this
   @FXML private var tableColumnId: TableColumn[T, Option[Int]] = _
   @FXML private var tableColumnName: TableColumn[T, String] = _
   @FXML private var tableColumnLat: TableColumn[T, BigDecimal] = _

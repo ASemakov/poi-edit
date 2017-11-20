@@ -14,12 +14,12 @@ class PointDistantiatedTable extends PointTable[UiPointDistantiated] {
   override def initialize() = {
     tableColumnDistance = new TableColumn[UiPointDistantiated, Double]("distance")
     super.initialize()
-    tableView.getSelectionModel.setSelectionMode(SelectionMode.SINGLE)
-    tableView.setEditable(false)
+    getSelectionModel.setSelectionMode(SelectionMode.SINGLE)
+    setEditable(false)
 
     tableColumnDistance.setCellValueFactory(x => x.getValue.distanceProperty)
     tableColumnDistance.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleConverter))
 
-    tableView.getColumns.add(0, tableColumnDistance)
+    getColumns.add(0, tableColumnDistance)
   }
 }
