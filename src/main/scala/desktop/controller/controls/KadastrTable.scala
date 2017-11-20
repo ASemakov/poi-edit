@@ -2,14 +2,14 @@ package desktop.controller.controls
 
 import java.io.IOException
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.TableColumn
+import javafx.scene.control.{TableColumn, TableView}
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 
 import desktop.model.UiKadastr
 import desktop.utils.converters._
 import model.{Category, Region}
 
-class KadastrTable[T <: UiKadastr] {
+class KadastrTable[T <: UiKadastr] extends TableView[T] {
   @FXML private var tableColumnId: TableColumn[T, Option[Int]] = _
   @FXML private var tableColumnNum: TableColumn[T, Option[String]] = _
   @FXML private var tableColumnNum2: TableColumn[T, Option[String]] = _

@@ -2,7 +2,7 @@ package desktop.model
 
 import javafx.beans.property.SimpleObjectProperty
 
-import model.{Category, Region}
+import model.{Category, Kadastr, Region}
 
 class UiKadastr(
                  val idProperty: SimpleObjectProperty[Option[Int]],
@@ -32,4 +32,8 @@ object UiKadastr {
     new SimpleObjectProperty[Option[Category]](category),
     new SimpleObjectProperty[Option[String]](comment)
   )
+
+  def apply(k: Kadastr, r: Option[Region], c: Option[Category]): UiKadastr = {
+    apply(k.id, k.num, k.num2, k.name, k.l, k.a, k.v, r, c, k.comment)
+  }
 }

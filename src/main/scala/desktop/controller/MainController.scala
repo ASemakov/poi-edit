@@ -46,8 +46,7 @@ class MainController() {
             Platform.runLater(() => {
               WindowUtils.information("Import was successful.")
               btnReloadClick()
-            }
-            )
+            })
           case Failure(ex) =>
             Platform.runLater(() => {
               WindowUtils.error(s"Import failed: ${ex}")

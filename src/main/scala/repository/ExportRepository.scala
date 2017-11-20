@@ -1,28 +1,24 @@
 package repository
 
-import java.io.{File, FileReader, FileWriter}
+import java.io.{File, FileWriter}
 
 import model._
+import model.export.ExportObject
+import util.JSON
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import util.JSON
-
-case class ExportObject(
-                         category: Seq[Category], region: Seq[Region], pointType: Seq[PointType],
-                         trustLevel: Seq[TrustLevel], kadastr: Seq[Kadastr], point: Seq[Point]
-                       )
 
 
 case class ExportRepository(file: File) {
   def backup(): Future[File] = {
     for {
-     category <- CategoryRepository().all()
-     region <- RegionRepository().all()
-     pointType <- PointTypeRepository().all()
-     trustLevel <- TrustLevelRepository().all()
-     kadastr <- KadastrRepository().all()
-     point <- PointRepository().all()
+      category <- CategoryRepository().all()
+      region <- RegionRepository().all()
+      pointType <- PointTypeRepository().all()
+      trustLevel <- TrustLevelRepository().all()
+      kadastr <- KadastrRepository().all()
+      point <- PointRepository().all()
     } yield {
       val ex = ExportObject(category, region, pointType, trustLevel, kadastr, point)
       file.createNewFile()
