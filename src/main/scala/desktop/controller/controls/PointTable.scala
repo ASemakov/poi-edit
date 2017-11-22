@@ -6,6 +6,7 @@ import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control.{SelectionMode, TableColumn, TableView}
 
 import desktop.model.UiPoint
+import desktop.utils.OptionComparator
 import desktop.utils.converters._
 import model.{PointType, TrustLevel}
 
@@ -45,10 +46,10 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
     tableColumnId.setCellValueFactory(_.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
+    tableColumnId.setComparator(new OptionComparator[Int])
 
     tableColumnName.setCellValueFactory(_.getValue.nameProperty)
     tableColumnName.setCellFactory(TextFieldTableCell.forTableColumn())
-    tableColumnName.setOnEditCommit(x => x.getTableView.getItems.get(x.getTablePosition.getRow).nameProperty.set(x.getNewValue))
 
     tableColumnLat.setCellValueFactory(_.getValue.latProperty)
     tableColumnLat.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalConverter))
@@ -58,17 +59,21 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
     tableColumnAltitude.setCellValueFactory(_.getValue.altitudeProperty)
     tableColumnAltitude.setCellFactory(TextFieldTableCell.forTableColumn(new OptionBigDecimalConverter))
+    tableColumnAltitude.setComparator(new OptionComparator[BigDecimal])
 
     tableColumnPrecision.setCellValueFactory(_.getValue.precisionProperty)
     tableColumnPrecision.setCellFactory(TextFieldTableCell.forTableColumn(new OptionBigDecimalConverter))
+    tableColumnPrecision.setComparator(new OptionComparator[BigDecimal])
 
     tableColumnDescription.setCellValueFactory(_.getValue.descriptionProperty)
     tableColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
+    tableColumnDescription.setComparator(new OptionComparator[String])
 
     tableColumnPointtype.setCellValueFactory(_.getValue.pointtypeProperty)
     tableColumnTrustlevel.setCellValueFactory(_.getValue.trustlevelProperty)
 
     tableColumnDataid.setCellValueFactory(_.getValue.dataidProperty)
     tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
+    tableColumnDataid.setComparator(new OptionComparator[Int])
   }
 }

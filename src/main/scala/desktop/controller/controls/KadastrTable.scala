@@ -2,10 +2,11 @@ package desktop.controller.controls
 
 import java.io.IOException
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.{TableColumn, TableView}
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
+import javafx.scene.control.{TableColumn, TableView}
 
 import desktop.model.UiKadastr
+import desktop.utils.OptionComparator
 import desktop.utils.converters._
 import model.{Category, Region}
 
@@ -34,30 +35,39 @@ class KadastrTable[T <: UiKadastr] extends TableView[T] {
   def initialize() = {
     tableColumnId.setCellValueFactory(_.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
+    tableColumnId.setComparator(new OptionComparator[Int])
 
     tableColumnNum.setCellValueFactory(_.getValue.numProperty)
     tableColumnNum.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
+    tableColumnNum.setComparator(new OptionComparator[String])
 
     tableColumnNum2.setCellValueFactory(_.getValue.num2Property)
     tableColumnNum2.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
+    tableColumnNum2.setComparator(new OptionComparator[String])
 
     tableColumnName.setCellValueFactory(_.getValue.nameProperty)
     tableColumnName.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
+    tableColumnName.setComparator(new OptionComparator[String])
 
     tableColumnLength.setCellValueFactory(_.getValue.lProperty)
     tableColumnLength.setCellFactory(TextFieldTableCell.forTableColumn(new OptionDoubleConverter))
+    tableColumnLength.setComparator(new OptionComparator[Double])
 
     tableColumnAmplitude.setCellValueFactory(_.getValue.aProperty)
     tableColumnAmplitude.setCellFactory(TextFieldTableCell.forTableColumn(new OptionDoubleConverter))
+    tableColumnAmplitude.setComparator(new OptionComparator[Double])
 
     tableColumnVolume.setCellValueFactory(_.getValue.vProperty)
     tableColumnVolume.setCellFactory(TextFieldTableCell.forTableColumn(new OptionDoubleConverter))
+    tableColumnVolume.setComparator(new OptionComparator[Double])
 
     tableColumnRegion.setCellValueFactory(_.getValue.regionProperty)
     tableColumnCategory.setCellValueFactory(_.getValue.categoryProperty)
 
     tableColumnComment.setCellValueFactory(_.getValue.commentProperty)
     tableColumnComment.setCellFactory(TextFieldTableCell.forTableColumn(new OptionStringConverter))
+    tableColumnComment.setComparator(new OptionComparator[String])
+
   }
 
   def setRegions(ts: Seq[Region]) = {
