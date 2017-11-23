@@ -1,14 +1,37 @@
 package desktop.controller.controls
 
 import java.io.IOException
+import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
+import javafx.event.{ActionEvent, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
-import javafx.scene.control.{SelectionMode, TableColumn, TableView}
+import javafx.scene.control._
+import javafx.stage.Stage
+import javafx.util.StringConverter
 
+import desktop.controller.KadastrController
 import desktop.model.UiPoint
-import desktop.utils.OptionComparator
 import desktop.utils.converters._
+import desktop.utils.{OptionComparator, WindowUtils}
 import model.{PointType, TrustLevel}
+
+private class ButtonTableCell[S, T] extends TableCell[S, T]{
+  val cellButton: Button  = new Button()
+  def setOnAction(value: EventHandler[ActionEvent]): Unit = cellButton.setOnAction(value)
+
+  private val converter = new SimpleObjectProperty[StringConverter[T]](this, "converter")
+  def converterProperty: ObjectProperty[StringConverter[T]] = converter
+  def setConverter(value: StringConverter[T]): Unit = converterProperty.set(value)
+  def getConverter: StringConverter[T] = converterProperty.get
+
+  override def updateItem(item: T, empty: Boolean): Unit = {
+    super.updateItem(item, empty)
+    if (!empty) {
+      cellButton.setText(converter.get().toString(item))
+      setGraphic(cellButton)
+    }
+  }
+}
 
 class PointTable[T <: UiPoint] extends TableView[T] {
   @FXML private var tableColumnId: TableColumn[T, Option[Int]] = _
@@ -73,7 +96,27 @@ class PointTable[T <: UiPoint] extends TableView[T] {
     tableColumnTrustlevel.setCellValueFactory(_.getValue.trustlevelProperty)
 
     tableColumnDataid.setCellValueFactory(_.getValue.dataidProperty)
-    tableColumnDataid.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
+    tableColumnDataid.setCellFactory(tc => {
+      val btc = new ButtonTableCell[T, Option[Int]]()
+      btc.setConverter(new StringConverter[Option[Int]] {
+        override def toString(`object`: Option[Int]): String = `object`.map(_.toString).getOrElse("-----")
+        override def fromString(string: String): Option[Int] = ???
+      })
+      btc.setOnAction(_ => {
+        if (btc.getTableView.editableProperty().get() && btc.getTableColumn.editableProperty().get()) {
+          val ctrl = WindowUtils.createStage[KadastrController](this.getScene.getWindow.asInstanceOf[Stage], getClass.getResource("/fxml/scenes/kadastr.fxml"))
+          ctrl.setSelectedId(btc.getItem)
+          ctrl.setOnAction((x: Option[Int]) => {
+            val row: TableRow[T] = btc.getTableRow.asInstanceOf[TableRow[T]]
+            val item: T = row.getItem
+            item.dataidProperty.set(x)
+          })
+        }
+      })
+      btc
+    })
     tableColumnDataid.setComparator(new OptionComparator[Int])
   }
+
+
 }

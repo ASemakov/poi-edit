@@ -49,7 +49,7 @@ class MainController() {
             })
           case Failure(ex) =>
             Platform.runLater(() => {
-              WindowUtils.error(s"Import failed: ${ex}")
+              WindowUtils.error(s"Import failed: $ex")
             })
         }
         case None =>
