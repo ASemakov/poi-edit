@@ -6,11 +6,14 @@ import javafx.stage.{FileChooser, Stage}
 object FileChoosers{
   private val gpxFilter = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx")
   private val jsonFilter = new FileChooser.ExtensionFilter("Backup json files (*.json)", "*.json")
+  private val jsonGzFilter = new FileChooser.ExtensionFilter("Backup json files (*.json.gz)", "*.json.gz")
 
-  private def getFileChooser(title: String, filter: FileChooser.ExtensionFilter): FileChooser = {
+  private def getFileChooser(title: String, filter: FileChooser.ExtensionFilter): FileChooser = getFileChooser(title, Seq(filter))
+
+    private def getFileChooser(title: String, filter: Seq[FileChooser.ExtensionFilter]): FileChooser = {
     val fc = new FileChooser()
     fc.setTitle(title)
-    fc.getExtensionFilters.add(filter)
+    fc.getExtensionFilters.addAll(filter: _*)
     fc
   }
 
@@ -20,12 +23,15 @@ object FileChoosers{
   }
 
   def selectBackupFile(stage: Stage): Option[File] = {
-    val fc = getFileChooser("Backup file", jsonFilter)
+    val fc = getFileChooser("Backup file", Seq(jsonGzFilter, jsonFilter))
     Option(fc.showSaveDialog(stage))
-      .map(file => if (file.getName.endsWith(".json")) file else new File(file.getAbsolutePath + ".json"))
+      .map(file => {
+        val ext = fc.getSelectedExtensionFilter.getExtensions.get(0).substring(1)
+        if (file.getName.endsWith(ext)) file else new File(file.getAbsolutePath + ext)
+      })
   }
   def selectRestoreFile(stage: Stage): Option[File] = {
-    val fc = getFileChooser("Backup file", jsonFilter)
+    val fc = getFileChooser("Backup file", Seq(jsonGzFilter, jsonFilter))
     Option(fc.showOpenDialog(stage))
   }
 }

@@ -1,8 +1,8 @@
 package repository
 
-import java.io.{File, FileWriter}
+import java.io._
+import java.util.zip.{GZIPInputStream, GZIPOutputStream}
 
-import model._
 import model.export.ExportObject
 import util.JSON
 
@@ -11,6 +11,28 @@ import scala.concurrent.Future
 
 
 case class ExportRepository(file: File) {
+  protected def getReader: Reader = {
+    val input = new FileInputStream(file)
+    new InputStreamReader(
+      if (file.getName.endsWith(".gz")) {
+        new GZIPInputStream(input)
+      } else {
+        input
+      }
+    )
+  }
+
+  protected def getWriter: Writer = {
+    val out = new FileOutputStream(file)
+    new OutputStreamWriter(
+      if (file.getName.endsWith(".gz")) {
+        new GZIPOutputStream(out)
+      } else {
+        out
+      }
+    )
+  }
+
   def backup(): Future[File] = {
     for {
       category <- CategoryRepository().all()
@@ -22,15 +44,15 @@ case class ExportRepository(file: File) {
     } yield {
       val ex = ExportObject(category, region, pointType, trustLevel, kadastr, point)
       file.createNewFile()
-      val writer = new FileWriter(file)
-      writer.write(JSON.writePretty(ex))
-      writer.close()
+      val writer = getWriter
+      JSON.writePretty(ex, writer)
       file
     }
   }
 
   def restore(): Future[File] = {
-    val export = JSON.read[ExportObject](file)
+    val reader = getReader
+    val export = JSON.read[ExportObject](reader)
     for {
       _ <- CategoryRepository().insertAll(export.category)
       _ <- RegionRepository().insertAll(export.region)
