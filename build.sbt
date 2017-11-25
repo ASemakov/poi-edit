@@ -8,7 +8,7 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.3",
       version      := "0.1.0-SNAPSHOT"
     )),
-    name := "PoiEdit",
+    name := "poi-edit",
     libraryDependencies ++= Seq(
       scalaTest % Test,
       "org.scala-lang" % "scala-reflect" % "2.12.3",
@@ -26,6 +26,7 @@ lazy val root = (project in file(".")).
       "org.json4s" %% "json4s-native" % "3.5.3"  // JSON parsing
 ),
     mainClass in (Compile, run) := Some("runner.GUI"),  // Main class to start
+    mainClass in assembly := Some("runner.GUI"),
     scalaxbPackageName in (Compile, scalaxb) := "scalaxb.generated",
     scalacOptions := Seq("-unchecked", "-deprecation")
   )
