@@ -12,6 +12,6 @@ case class GPXRepository(file: File) {
   def readWpt(): Seq[Point] = {
     val xml = XML.loadFile(file)
     val gpx = fromXML[GpxType](xml)
-    gpx.wpt.map(w => Point(None, w.name.getOrElse(""), w.lat, w.lon, w.ele, None, w.desc, 0, 0, None))
+    gpx.wpt.map(w => Point(None, w.name.getOrElse(""), w.lat, w.lon, w.ele, None, w.cmt, 0, 0, None))
   }
 }

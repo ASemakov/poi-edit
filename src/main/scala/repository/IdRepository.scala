@@ -1,7 +1,7 @@
 package repository
 
 import model._
-import registration._
+import repository.registration._
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.TableQuery
 
@@ -25,13 +25,26 @@ trait IdRepository[E <: IEntity, M <: IdTable[E]] {
   def saveAll(entities: Seq[E]): Future[Seq[E]] = Future.sequence(entities.map(save))
 
   def insertAll(entities: Seq[E]): Future[Seq[E]] = {
-    db.run((q returning q).forceInsertAll(entities))
+    db.run((q returning q).forceInsertAll(entities)).map(x => {
+      seqReinit()
+      x
+    })
   }
 
-  def delete(entity: E): Future[Boolean] ={
+  def delete(entity: E): Future[Boolean] = {
     // Returns number of affected rows
     val eventualInt: Future[Int] = db.run(q.filter(_.id === entity.id).delete)
     eventualInt.map(_ > 0)
+  }
+
+  def truncate(): Future[Int] = {
+    db.run(q.delete)
+  }
+
+  protected def seqReinit(): Unit = {
+    db.run(q.map(_.id).max.result).map(x => {
+      db.run(sql"SELECT setval('#${q.baseTableRow.tableName}_id_seq', ${x})".asUpdate)
+    })
   }
 
   protected def q: TableQuery[M]

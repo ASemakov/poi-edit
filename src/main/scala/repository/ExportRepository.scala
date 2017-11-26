@@ -46,6 +46,7 @@ case class ExportRepository(file: File) {
       file.createNewFile()
       val writer = getWriter
       JSON.writePretty(ex, writer)
+      writer.close()
       file
     }
   }
@@ -53,7 +54,18 @@ case class ExportRepository(file: File) {
   def restore(): Future[File] = {
     val reader = getReader
     val export = JSON.read[ExportObject](reader)
+    reader.close()
+
     for {
+      // Truncate tables
+      _ <- PointRepository().truncate()
+      _ <- KadastrRepository().truncate()
+      _ <- CategoryRepository().truncate()
+      _ <- RegionRepository().truncate()
+      _ <- PointTypeRepository().truncate()
+      _ <- TrustLevelRepository().truncate()
+
+      // Insert values
       _ <- CategoryRepository().insertAll(export.category)
       _ <- RegionRepository().insertAll(export.region)
       _ <- PointTypeRepository().insertAll(export.pointType)

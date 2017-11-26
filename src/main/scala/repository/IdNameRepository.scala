@@ -11,4 +11,6 @@ trait IdNameRepository[E <: IDictEntity, M <: IdNameTable[E]] extends IdReposito
 
   def getByName(name: String): Future[Option[E]] = run(q.filter(_.name === name)).map(_.headOption)
 
+  override protected def seqReinit(): Unit = {}
+
 }
