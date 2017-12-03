@@ -1,11 +1,11 @@
 package repository
 
-import model.{Point, PointType, TrustLevel}
-import repository.registration.{PointReg, PointTypeReg, TrustLevelReg}
+import model._
+import repository.registration._
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.TableQuery
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 case class PointRepository() extends IdRepository[Point, PointReg] {
@@ -46,4 +46,14 @@ case class PointRepository() extends IdRepository[Point, PointReg] {
         + Math.cos((lat * Math.PI / 180).toDouble) * Math.cos((lat2 * Math.PI / 180.0).toDouble) * Math.cos(((lon - lon2) * Math.PI / 180).toDouble)
     ) * 6371000.0
   }
+}
+
+
+case class TrackRepository() extends IdRepository[Track, TrackReg] {
+  override protected def q = TableQuery[TrackReg]
+}
+
+
+case class TrackPointRepository() extends IdRepository[TrackPoint, TrackPointReg] {
+  override protected def q = TableQuery[TrackPointReg]
 }

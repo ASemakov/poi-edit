@@ -3,6 +3,7 @@ package runner
 import repository.registration._
 import scopt.Read
 import slick.jdbc.PostgresProfile.api._
+import slick.lifted
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -38,7 +39,9 @@ object SchemaExtractor {
       TableQuery[TrustLevelReg],
       TableQuery[PointTypeReg],
       TableQuery[KadastrReg],
-      TableQuery[PointReg]
+      TableQuery[PointReg],
+      TableQuery[TrackReg],
+      TableQuery[TrackPointReg]
     )
     val statements = config.action match {
       case ExtractorActions.create => tables.map(_.schema.create)
