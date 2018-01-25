@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body style="height: 100%">
+<div id="map"></div>
+<script>
+    var map = null;
+    var objects = {
+        points: {},
+        tracks: []
+    };
+    function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+        });
+        for (var p in objects.points){
+            objects.points[p].setMap(map)
+        }
+    }
+
+    function addPoint(id, lat, lon, short_name, description){
+        if (map) {
+            if (!objects.points.hasOwnProperty(id)) {
+                objects.points[id] = new google.maps.Marker({
+                    position: {lat: lat, lng: lon},
+                    map: map,
+                    label: short_name.toString(),
+                    title: description
+                })
+            }
+        } else {
+            setTimeout(addPoint, 1000, id, lat, lon, short_name, description)
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9GvQNVfspi6_gP40K4DkVOXlGM35RevY&callback=initMap">
+</script>
+</body>
+</html>

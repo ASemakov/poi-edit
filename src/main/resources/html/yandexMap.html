@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var myMap = null;
+
+        function addPoint(){
+            if (myMap) {
+                alert("make");
+                var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+                    hintContent: 'Москва!',
+                    balloonContent: 'Столица России'
+                });
+                alert(myPlacemark);
+                myMap.geoObjects.add(myPlacemark);
+                alert(myMap.geoObjects);
+
+                alert("after");
+            } else {
+                alert("delay");
+                setTimeout(addPoint, 1000, id, 55.76, 37.64)
+            }
+        }
+    </script>
+    <script src="https://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <!--<script src="https://api-maps.yandex.ru/2.1/?lang=en_US" type="text/javascript"></script>-->
+    <script type="text/javascript">
+        ymaps.ready(init);
+
+        function init() {
+            myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
+        }
+
+    </script>
+    <!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
+    <title>Map</title>
+</head>
+<body style="height: 100%; margin: 0px; padding: 0px">
+<div id="map" style="width: 100%; height: 100%"></div>
+</body>
+</html>

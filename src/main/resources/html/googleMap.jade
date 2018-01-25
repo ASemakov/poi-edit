@@ -1,0 +1,43 @@
+- import desktop.Cfg
+html(style="height: 100%")
+    head
+        :css
+            #map {
+                height: 100%;
+                width: 100%;
+            }
+    body(style="height: 100%")
+        div#map
+        :javascript
+            var map = null;
+            var objects = {
+                points: {},
+                tracks: []
+            };
+            function initMap() {
+                var uluru = {lat: -25.363, lng: 131.044};
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 4,
+                    center: uluru
+                });
+                for (var p in objects.points){
+                    objects.points[p].setMap(map)
+                }
+            }
+
+            function addPoint(id, lat, lon, short_name, description){
+                if (map) {
+                    if (!objects.points.hasOwnProperty(id)) {
+                        objects.points[id] = new google.maps.Marker({
+                            position: {lat: lat, lng: lon},
+                            map: map,
+                            label: short_name.toString(),
+                            title: description
+                        })
+                    }
+                } else {
+                    setTimeout(addPoint, 1000, id, lat, lon, short_name, description)
+                }
+            }
+
+        script(async defer src="https://maps.googleapis.com/maps/api/js?key=#{Cfg().googleApiKey}&callback=initMap")

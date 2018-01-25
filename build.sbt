@@ -23,7 +23,8 @@ lazy val root = (project in file(".")).
       // END: Slick framework dependency
       "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
       "com.github.scopt" %% "scopt" % "3.7.0",  // Option parsing
-      "org.json4s" %% "json4s-native" % "3.5.3"  // JSON parsing
+      "org.json4s" %% "json4s-native" % "3.5.3",  // JSON parsing
+      "org.scalatra.scalate" %% "scalate-core" % "1.8.0"  // Scalate template engine
 ),
     mainClass in (Compile, run) := Some("runner.GUI"),  // Main class to start
     mainClass in assembly := Some("runner.GUI"),
