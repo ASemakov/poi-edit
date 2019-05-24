@@ -34,13 +34,15 @@ lazy val root = (project in file(".")).
       // END: Slick framework dependency
       "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
       "com.github.scopt" %% "scopt" % "3.7.0",  // Option parsing
-      "org.json4s" %% "json4s-native" % "3.6.5"  // JSON parsing
+      "org.json4s" %% "json4s-native" % "3.6.5",  // JSON parsing
+      // OpenJFX UI
+      "org.openjfx" % "javafx-base" % "11.0.2" classifier osName.value,
+      "org.openjfx" % "javafx-controls" % "11.0.2" classifier osName.value,
+      "org.openjfx" % "javafx-fxml" % "11.0.2" classifier osName.value,
+      "org.openjfx" % "javafx-graphics" % "11.0.2" classifier osName.value,
+      "org.openjfx" % "javafx-web" % "11.0.2" classifier osName.value,
+      // END: OpenJFX UI
     ),
-    libraryDependencies += "org.openjfx" % "javafx-base" % "11.0.2" classifier osName.value,
-    libraryDependencies += "org.openjfx" % "javafx-controls" % "11.0.2" classifier osName.value,
-    libraryDependencies += "org.openjfx" % "javafx-fxml" % "11.0.2" classifier osName.value,
-    libraryDependencies += "org.openjfx" % "javafx-graphics" % "11.0.2" classifier osName.value,
-    libraryDependencies += "org.openjfx" % "javafx-web" % "11.0.2" classifier osName.value,
     mainClass in (Compile, run) := Some("runner.GUI"),  // Main class to start
     mainClass in assembly := Some("runner.GUI"),
     scalaxbPackageName in (Compile, scalaxb) := "generated",
