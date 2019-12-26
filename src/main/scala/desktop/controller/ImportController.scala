@@ -23,7 +23,7 @@ class ImportController {
   def stage: Stage = mainPane.getScene.getWindow.asInstanceOf[Stage]
 
   def onMenuImportGpxClick(): Unit = {
-    FileChoosers.selectGpxFile(stage) match {
+    FileChoosers.selectImportGpxFile(stage) match {
       case Some(f) =>
         PointTypeRepository().all().foreach(x => {
           tableGpx.setPointTypes(x)

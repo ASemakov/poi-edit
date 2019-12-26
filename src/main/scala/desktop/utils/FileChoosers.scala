@@ -17,9 +17,18 @@ object FileChoosers{
     fc
   }
 
-  def selectGpxFile(stage: Stage): Option[File] = {
+  def selectImportGpxFile(stage: Stage): Option[File] = {
     val fc = getFileChooser("Import GPX file", gpxFilter)
     Option(fc.showOpenDialog(stage))
+  }
+
+  def selectExportGpxFile(stage: Stage): Option[File] = {
+    val fc = getFileChooser("Export GPX file", gpxFilter)
+    Option(fc.showSaveDialog(stage))
+      .map(file => {
+        val ext = fc.getSelectedExtensionFilter.getExtensions.get(0).substring(1)
+        if (file.getName.endsWith(ext)) file else new File(file.getAbsolutePath + ext)
+      })
   }
 
   def selectBackupFile(stage: Stage): Option[File] = {

@@ -1,5 +1,6 @@
 package runner
 
+import model.Category
 import repository.registration._
 import scopt.Read
 import slick.jdbc.PostgresProfile.api._
@@ -48,11 +49,26 @@ object SchemaExtractor {
       case ExtractorActions.drop => tables.map(_.schema.drop)
       case ExtractorActions.truncate => tables.map(_.schema.truncate)
     }
+//    val populates = config.action match  {
+//      case ExtractorActions.create => {
+//          Seq(
+//            TableQuery[CategoryReg] ++= Seq(
+//              Category(1, "1"),
+//              Category(2, "2"),
+//              Category(3, "3"),
+//              Category(4, "4"),
+//            )
+//          )
+//      }
+
+      case _ => Seq()
+    }
+
     if (config.execute) {
       val db = Database.forConfig("mydb")
-      Await.result(db.run(DBIO.seq(statements: _*)), Duration.Inf)
+      Await.result(db.run(DBIO.seq(statements ++ populates: _*)), Duration.Inf)
     } else {
-      statements.flatMap(_.statements).foreach(println)
+      (statements ++ populates).flatMap(_.statements).foreach(println)
     }
   }
 }

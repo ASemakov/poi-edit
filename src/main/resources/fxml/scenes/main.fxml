@@ -27,6 +27,11 @@
                 <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
               </accelerator>
             </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onMenuExportGpxClick" text="Export gpx file ...">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+              </accelerator>
+            </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#onMenuCloseClick" text="Close">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>

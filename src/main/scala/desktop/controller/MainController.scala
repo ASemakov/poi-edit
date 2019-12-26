@@ -5,11 +5,10 @@ import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control._
 import javafx.stage.Stage
-
 import desktop.controller.controls.PointTable
 import desktop.model.UiPoint
 import desktop.utils._
-import repository.{ExportRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{ExportRepository, GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -27,6 +26,18 @@ class MainController() {
     ctrl.onMenuImportGpxClick()
   }
 
+  protected def onMenuExportGpxClick(): Unit = {
+    FileChoosers.selectExportGpxFile(stage) match {
+      case Some(file) =>
+        PointRepository().allJoined().foreach(s=>{
+          GPXRepository(file).writeWpt(s.map(_._1).filter(x=>x.trustlevelid >= 0))
+          Platform.runLater(()=>{
+            WindowUtils.information("GPX file was exported.")
+          })
+        })
+      case None =>
+    }
+  }
   protected def onMenuCloseClick(): Unit = {
     stage.close()
   }
