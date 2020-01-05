@@ -4,10 +4,10 @@ import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
-
 import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.{UiPoint, UiPointDistantiated}
 import desktop.utils.{FileChoosers, WindowUtils}
+import javafx.application.Platform
 import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -92,10 +92,8 @@ class ImportController {
     if (Option(tableGpx.getSelectionModel.getSelectedItem).isEmpty) {
       return
     }
-    tableGpx.getItems.remove(tableGpx.getSelectionModel.getSelectedItem)
-    if (tableGpx.getItems.size() > 0) {
-      tableGpx.getSelectionModel.select(0)
-    }
+    val items = tableGpx.getSelectionModel.getSelectedItems.toArray(new Array[UiPoint](tableGpx.getSelectionModel.getSelectedItems.size()))
+    items.foreach(tableGpx.getItems.remove)
   }
 
   @FXML
@@ -105,12 +103,12 @@ class ImportController {
         case Some(item) =>
           PointRepository()
             .topNByDistance(item.latProperty.get(), item.lonProperty.get(), 10)
-            .foreach(s => {
+            .foreach(s => Platform.runLater(() => {
               tableMatch.getItems.setAll(s.map { case (p, t, l, d) => UiPointDistantiated(p, t, l, d) }: _*)
               if (s.nonEmpty) {
                 tableMatch.getSelectionModel.select(0)
               }
-            })
+            }))
         case None =>
           tableMatch.getItems.clear()
       }

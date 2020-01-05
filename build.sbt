@@ -28,11 +28,11 @@ lazy val root = (project in file(".")).
       "javax.xml.bind" % "jaxb-api" % "2.3.1",
       // END: Scalaxb dependency
       // Slick framework dependency
-      "com.typesafe.slick" %% "slick" % "3.2.1",
-      "org.slf4j" % "slf4j-nop" % "1.6.4",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.2.1",
+      "com.typesafe.slick" %% "slick" % "3.3.1",
+      "org.slf4j" % "slf4j-nop" % "1.7.26",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.1",
       // END: Slick framework dependency
-      "org.postgresql" % "postgresql" % "42.1.4",  // PG Dependency
+      "org.postgresql" % "postgresql" % "42.2.5",  // PG Dependency
       "com.github.scopt" %% "scopt" % "3.7.0",  // Option parsing
       "org.json4s" %% "json4s-native" % "3.6.5",  // JSON parsing
       // OpenJFX UI
