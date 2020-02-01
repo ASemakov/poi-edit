@@ -13,21 +13,6 @@ case class Point
   description: Option[String],
   pointtypeid: Int,
   trustlevelid: Int,
+  sourceid : Option[Int],
   dataid: Option[Int]
-) extends IEntity
-
-case class Track
-(
-  id: Option[Int],
-  name: String,
-) extends IEntity
-
-case class TrackPoint
-(
-  id: Option[Int],
-  trackId: Int,
-  lat: BigDecimal,
-  lon: BigDecimal,
-  altitude: Option[BigDecimal],
-  time: Timestamp
 ) extends IEntity

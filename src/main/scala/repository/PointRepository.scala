@@ -11,30 +11,34 @@ import scala.concurrent.Future
 case class PointRepository() extends IdRepository[Point, PointReg] {
   val q = TableQuery[PointReg]
 
-  def allJoined(): Future[Seq[(Point, PointType, TrustLevel)]] = {
-    val eventualPoints: Future[Seq[(Point, PointType, TrustLevel)]] = run(q
+  def allJoined(): Future[Seq[(Point, PointType, TrustLevel, Option[PointSource])]] = {
+    val eventualPoints: Future[Seq[(Point, PointType, TrustLevel, Option[PointSource])]] = run(q
       .join(TableQuery[PointTypeReg])
-      .on(_.pointtypeid === _.id)
+        .on(_.pointtypeid === _.id)
       .join(TableQuery[TrustLevelReg])
-      .on(_._1.trustlevelid === _.id)
-      .map { case ((p, pt), t) => (p, pt, t) }
+        .on(_._1.trustlevelid === _.id)
+      .joinLeft(TableQuery[PointSourceReg])
+        .on(_._1._1.sourceid === _.id)
+      .map { case (((p, pt), t), s) => (p, pt, t, s) }
     )
     eventualPoints
   }
 
-  def topNByDistance(lat: BigDecimal, lon: BigDecimal, count: Int): Future[Seq[(Point, PointType, TrustLevel, Double)]] = {
-    val r: Future[Seq[(Point, PointType, TrustLevel, Double)]] = run(q
+  def topNByDistance(lat: BigDecimal, lon: BigDecimal, count: Int): Future[Seq[(Point, PointType, TrustLevel, Option[PointSource], Double)]] = {
+    val r: Future[Seq[(Point, PointType, TrustLevel, Option[PointSource], Double)]] = run(q
       .join(TableQuery[PointTypeReg])
-      .on(_.pointtypeid === _.id)
+        .on(_.pointtypeid === _.id)
       .join(TableQuery[TrustLevelReg])
-      .on(_._1.trustlevelid === _.id)
-      .map { case ((p, pt), t) => (p, pt, t) }
+        .on(_._1.trustlevelid === _.id)
+      .joinLeft(TableQuery[PointSourceReg])
+        .on(_._1._1.sourceid === _.id)
+      .map { case (((p, pt), t), s) => (p, pt, t, s) }
     )
       .map(_
-        .map { case (p, t, l) => (
-          p, t, l, calcDistance(lat, lon, p.lat, p.lon))
+        .map { case (p, t, l, s) => (
+          p, t, l, s, calcDistance(lat, lon, p.lat, p.lon))
         }
-        .sortBy { case (p, t, l, d) => d }
+        .sortBy { case (p, t, l, s, d) => d }
         .take(count)
       )
     r

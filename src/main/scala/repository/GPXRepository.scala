@@ -20,7 +20,7 @@ case class GPXRepository(file: File) {
 
   def readWpt(): Seq[Point] = {
     val gpx = readGpx
-    gpx.wpt.map(w => Point(None, w.name.getOrElse(""), w.lat, w.lon, w.ele, None, w.cmt, 0, 0, None))
+    gpx.wpt.map(w => Point(None, w.name.getOrElse(""), w.lat, w.lon, w.ele, None, w.cmt, 0, 0, None, None))
   }
 
   def writeWpt(points: Seq[Point]): Unit = {

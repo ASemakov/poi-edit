@@ -70,7 +70,7 @@ class MainController() {
 
   protected def btnReloadClick(): Unit = {
     PointRepository().allJoined().foreach(x => {
-      val data = FXCollections.observableArrayList(x.map { case (p, t, l) => UiPoint(p, t, l) }: _*)
+      val data = FXCollections.observableArrayList(x.map { case (p, t, l, s) => UiPoint(p, t, l, s) }: _*)
       tableView.setItems(data)
       if (!data.isEmpty) {
         tableView.getSelectionModel.select(0)
@@ -114,7 +114,7 @@ class MainController() {
     PointTypeRepository().getById(1).flatMap(
       pt => TrustLevelRepository().getById(1).map(pt -> _)
     ).foreach { case (t, l) =>
-      tableView.getItems.add(UiPoint(None, "name", 0, 0, None, None, None, t.get, l.get, None))
+      tableView.getItems.add(UiPoint(None, "name", 0, 0, None, None, None, t.get, l.get, None, None)) // TODO: AS Source
     }
   }
 

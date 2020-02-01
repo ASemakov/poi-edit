@@ -39,6 +39,7 @@ object SchemaExtractor {
       TableQuery[CategoryReg],
       TableQuery[TrustLevelReg],
       TableQuery[PointTypeReg],
+      TableQuery[PointSourceReg],
       TableQuery[KadastrReg],
       TableQuery[PointReg],
       TableQuery[TrackReg],
