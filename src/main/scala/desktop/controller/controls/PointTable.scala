@@ -1,6 +1,7 @@
 package desktop.controller.controls
 
 import java.io.IOException
+
 import javafx.beans.property.{ObjectProperty, SimpleObjectProperty}
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
@@ -8,12 +9,11 @@ import javafx.scene.control.cell.{ComboBoxTableCell, TextFieldTableCell}
 import javafx.scene.control._
 import javafx.stage.Stage
 import javafx.util.StringConverter
-
 import desktop.controller.KadastrController
 import desktop.model.UiPoint
 import desktop.utils.converters._
 import desktop.utils.{OptionComparator, WindowUtils}
-import model.{PointType, TrustLevel}
+import model.{PointSource, PointType, TrustLevel}
 
 private class ButtonTableCell[S, T] extends TableCell[S, T]{
   val cellButton: Button  = new Button()
@@ -43,6 +43,7 @@ class PointTable[T <: UiPoint] extends TableView[T] {
   @FXML private var tableColumnDescription: TableColumn[T, Option[String]] = _
   @FXML private var tableColumnPointtype: TableColumn[T, PointType] = _
   @FXML private var tableColumnTrustlevel: TableColumn[T, TrustLevel] = _
+  @FXML private var tableColumnSource: TableColumn[T, Option[PointSource]] = _
   @FXML private var tableColumnDataid: TableColumn[T, Option[Int]] = _
 
   private val fxmlLoader = new FXMLLoader(getClass.getResource("/fxml/controls/PointTable.fxml"))
@@ -61,6 +62,11 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
   def setTrustLevels(ts: Seq[TrustLevel]) = {
     tableColumnTrustlevel.setCellFactory(ComboBoxTableCell.forTableColumn(new IdNameStringConverter[TrustLevel], ts: _*))
+  }
+
+  def setSources(ts: Seq[PointSource]) = {
+    val items = None :: ts.map(Option(_)).toList
+    tableColumnSource.setCellFactory(ComboBoxTableCell.forTableColumn(new OptionIdNameStringConverter[PointSource], items: _*))
   }
 
   @FXML
@@ -94,6 +100,7 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
     tableColumnPointtype.setCellValueFactory(_.getValue.pointtypeProperty)
     tableColumnTrustlevel.setCellValueFactory(_.getValue.trustlevelProperty)
+    tableColumnSource.setCellValueFactory(_.getValue.source)
 
     tableColumnDataid.setCellValueFactory(_.getValue.dataidProperty)
     tableColumnDataid.setCellFactory(tc => {

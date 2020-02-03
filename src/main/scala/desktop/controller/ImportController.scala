@@ -36,7 +36,7 @@ class ImportController {
           .flatMap(t => TrustLevelRepository().getById(0).map(t -> _))
           .map {
             case (Some(t), Some(l)) =>
-              val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l)): _*)
+              val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l, None)): _*)
               tableGpx.setItems(value)
               if (!value.isEmpty) {
                 tableGpx.getSelectionModel.select(0)
@@ -104,7 +104,7 @@ class ImportController {
           PointRepository()
             .topNByDistance(item.latProperty.get(), item.lonProperty.get(), 10)
             .foreach(s => Platform.runLater(() => {
-              tableMatch.getItems.setAll(s.map { case (p, t, l, d) => UiPointDistantiated(p, t, l, d) }: _*)
+              tableMatch.getItems.setAll(s.map { case (p, t, l, s, d) => UiPointDistantiated(p, t, l, s, d) }: _*)
               if (s.nonEmpty) {
                 tableMatch.getSelectionModel.select(0)
               }

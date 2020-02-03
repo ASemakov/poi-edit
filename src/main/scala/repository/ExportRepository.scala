@@ -3,6 +3,7 @@ package repository
 import java.io._
 import java.util.zip.{GZIPInputStream, GZIPOutputStream}
 
+import model.PointSource
 import model.export.ExportObject
 import util.JSON
 
@@ -39,10 +40,11 @@ case class ExportRepository(file: File) {
       region <- RegionRepository().all()
       pointType <- PointTypeRepository().all()
       trustLevel <- TrustLevelRepository().all()
+      pointSource <- PointSourceRepository().all()
       kadastr <- KadastrRepository().all()
       point <- PointRepository().all()
     } yield {
-      val ex = ExportObject(category, region, pointType, trustLevel, kadastr, point)
+      val ex = ExportObject(category, region, pointType, trustLevel, pointSource, kadastr, point)
       file.createNewFile()
       val writer = getWriter
       JSON.writePretty(ex, writer)
@@ -60,6 +62,7 @@ case class ExportRepository(file: File) {
       // Truncate tables
       _ <- PointRepository().truncate()
       _ <- KadastrRepository().truncate()
+      _ <- PointSourceRepository().truncate()
       _ <- CategoryRepository().truncate()
       _ <- RegionRepository().truncate()
       _ <- PointTypeRepository().truncate()
@@ -70,6 +73,7 @@ case class ExportRepository(file: File) {
       _ <- RegionRepository().insertAll(export.region)
       _ <- PointTypeRepository().insertAll(export.pointType)
       _ <- TrustLevelRepository().insertAll(export.trustLevel)
+      _ <- PointSourceRepository().insertAll(export.pointSource)
       _ <- KadastrRepository().insertAll(export.kadastr)
       _ <- PointRepository().insertAll(export.point)
     } yield file

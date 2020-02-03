@@ -8,7 +8,7 @@ import javafx.stage.Stage
 import desktop.controller.controls.PointTable
 import desktop.model.UiPoint
 import desktop.utils._
-import repository.{ExportRepository, GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{ExportRepository, GPXRepository, PointRepository, PointSourceRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -77,13 +77,9 @@ class MainController() {
       }
     })
 
-    PointTypeRepository().all().foreach(x => {
-      tableView.setPointTypes(x)
-    })
-
-    TrustLevelRepository().all().foreach(x => {
-      tableView.setTrustLevels(x)
-    })
+    PointTypeRepository().all().foreach(tableView.setPointTypes)
+    TrustLevelRepository().all().foreach(tableView.setTrustLevels)
+    PointSourceRepository().all().foreach(tableView.setSources)
   }
 
   protected def btnSaveClick(): Unit = {

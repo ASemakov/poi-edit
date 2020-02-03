@@ -17,6 +17,7 @@
             <TableColumn fx:id="tableColumnDescription" minWidth="100.0" prefWidth="-1.0" text="description"/>
             <TableColumn fx:id="tableColumnPointtype" minWidth="100.0" prefWidth="-1.0" text="pointtypeid"/>
             <TableColumn fx:id="tableColumnTrustlevel" minWidth="100.0" prefWidth="-1.0" text="trustlevelid"/>
+            <TableColumn fx:id="tableColumnSource" minWidth="100.0" prefWidth="-1.0" text="sourceid"/>
             <TableColumn fx:id="tableColumnDataid" minWidth="100.0" prefWidth="-1.0" text="dataid"/>
         </columns>
 </fx:root>
