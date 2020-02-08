@@ -1,8 +1,7 @@
 package desktop.model
 
 import javafx.beans.property.{SimpleObjectProperty, SimpleStringProperty}
-
-import model.{Point, PointType, TrustLevel}
+import model.{Point, PointSource, PointType, TrustLevel}
 
 
 class UiPoint
@@ -16,12 +15,13 @@ class UiPoint
   val descriptionProperty: SimpleObjectProperty[Option[String]],
   val pointtypeProperty: SimpleObjectProperty[PointType],
   val trustlevelProperty: SimpleObjectProperty[TrustLevel],
+  val sourceProperty: SimpleObjectProperty[Option[PointSource]],
   val dataidProperty: SimpleObjectProperty[Option[Int]]
 ) {
 
   private def currentValues = (
     nameProperty.get(), latProperty.get(), lonProperty.get(), altitudeProperty.get(), precisionProperty.get(),
-    descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), dataidProperty.get()
+    descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), sourceProperty.get(), dataidProperty.get()
   )
 
   private val original = currentValues
@@ -32,12 +32,12 @@ class UiPoint
 
   def asPoint: Point = Point(idProperty.get(), nameProperty.get(), latProperty.get, lonProperty.get(),
     altitudeProperty.get(), precisionProperty.get(), descriptionProperty.get(), pointtypeProperty.get().id.get,
-    trustlevelProperty.get().id.get, dataidProperty.get())
+    trustlevelProperty.get().id.get, sourceProperty.get().map(_.id.get), dataidProperty.get())
 }
 
 object UiPoint {
-  def apply(p: Point, t: PointType, l: TrustLevel): UiPoint = UiPoint(
-    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, p.dataid
+  def apply(p: Point, t: PointType, l: TrustLevel, s: Option[PointSource]): UiPoint = UiPoint(
+    p.id, p.name, p.lat, p.lon, p.altitude, p.precision, p.description, t, l, s, p.dataid
   )
 
   def apply
@@ -51,6 +51,7 @@ object UiPoint {
     description: Option[String],
     pointtype: PointType,
     trustlevel: TrustLevel,
+    source: Option[PointSource],
     dataid: Option[Int]
 
   ): UiPoint = new UiPoint(
@@ -63,6 +64,7 @@ object UiPoint {
     new SimpleObjectProperty[Option[String]](description),
     new SimpleObjectProperty[PointType](pointtype),
     new SimpleObjectProperty[TrustLevel](trustlevel),
+    new SimpleObjectProperty[Option[PointSource]](source),
     new SimpleObjectProperty[Option[Int]](dataid)
   )
 }

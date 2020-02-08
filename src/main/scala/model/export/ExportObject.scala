@@ -8,6 +8,7 @@ case class ExportObject
   region: Seq[Region],
   pointType: Seq[PointType],
   trustLevel: Seq[TrustLevel],
+  pointSource: Seq[PointSource],
   kadastr: Seq[Kadastr],
   point: Seq[Point]
 )

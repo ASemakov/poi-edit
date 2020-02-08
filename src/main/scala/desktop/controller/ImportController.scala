@@ -8,7 +8,9 @@ import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.{UiPoint, UiPointDistantiated}
 import desktop.utils.{FileChoosers, WindowUtils}
 import javafx.application.Platform
-import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
+import javafx.geometry.Orientation
+import javafx.scene.control.SplitPane
+import repository.{GPXRepository, PointRepository, PointSourceRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
@@ -18,25 +20,19 @@ class ImportController {
   @FXML private var mainPane: AnchorPane = _
   @FXML private var tableGpx: PointTable[UiPoint] = _
   @FXML private var tableMatch: PointDistantiatedTable = _
-
+  @FXML private var splitMain: SplitPane = _
 
   def stage: Stage = mainPane.getScene.getWindow.asInstanceOf[Stage]
 
   def onMenuImportGpxClick(): Unit = {
     FileChoosers.selectImportGpxFile(stage) match {
       case Some(f) =>
-        PointTypeRepository().all().foreach(x => {
-          tableGpx.setPointTypes(x)
-        })
-
-        TrustLevelRepository().all().foreach(x => {
-          tableGpx.setTrustLevels(x)
-        })
+        tableGpx.initDropdowns()
         PointTypeRepository().getById(0)
           .flatMap(t => TrustLevelRepository().getById(0).map(t -> _))
           .map {
             case (Some(t), Some(l)) =>
-              val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l)): _*)
+              val value = FXCollections.observableArrayList(GPXRepository(f).readWpt().map(p => UiPoint(p, t, l, None)): _*)
               tableGpx.setItems(value)
               if (!value.isEmpty) {
                 tableGpx.getSelectionModel.select(0)
@@ -96,6 +92,10 @@ class ImportController {
     items.foreach(tableGpx.getItems.remove)
   }
 
+  def onSplitSwitch (): Unit = splitMain.setOrientation(
+    if(splitMain.getOrientation == Orientation.HORIZONTAL) Orientation.VERTICAL else Orientation.HORIZONTAL
+  )
+
   @FXML
   protected def initialize(): Unit = {
     tableGpx.getSelectionModel.selectedItemProperty().addListener((obs, oldSelection, newSelection) => {
@@ -104,7 +104,7 @@ class ImportController {
           PointRepository()
             .topNByDistance(item.latProperty.get(), item.lonProperty.get(), 10)
             .foreach(s => Platform.runLater(() => {
-              tableMatch.getItems.setAll(s.map { case (p, t, l, d) => UiPointDistantiated(p, t, l, d) }: _*)
+              tableMatch.getItems.setAll(s.map { case (p, t, l, s, d) => UiPointDistantiated(p, t, l, s, d) }: _*)
               if (s.nonEmpty) {
                 tableMatch.getSelectionModel.select(0)
               }
