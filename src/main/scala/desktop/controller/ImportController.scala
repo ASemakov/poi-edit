@@ -8,7 +8,7 @@ import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.{UiPoint, UiPointDistantiated}
 import desktop.utils.{FileChoosers, WindowUtils}
 import javafx.application.Platform
-import repository.{GPXRepository, PointRepository, PointTypeRepository, TrustLevelRepository}
+import repository.{GPXRepository, PointRepository, PointSourceRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
@@ -25,13 +25,7 @@ class ImportController {
   def onMenuImportGpxClick(): Unit = {
     FileChoosers.selectImportGpxFile(stage) match {
       case Some(f) =>
-        PointTypeRepository().all().foreach(x => {
-          tableGpx.setPointTypes(x)
-        })
-
-        TrustLevelRepository().all().foreach(x => {
-          tableGpx.setTrustLevels(x)
-        })
+        tableGpx.initDropdowns()
         PointTypeRepository().getById(0)
           .flatMap(t => TrustLevelRepository().getById(0).map(t -> _))
           .map {

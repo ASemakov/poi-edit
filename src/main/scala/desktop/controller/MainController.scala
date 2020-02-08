@@ -77,9 +77,7 @@ class MainController() {
       }
     })
 
-    PointTypeRepository().all().foreach(tableView.setPointTypes)
-    TrustLevelRepository().all().foreach(tableView.setTrustLevels)
-    PointSourceRepository().all().foreach(tableView.setSources)
+    tableView.initDropdowns()
   }
 
   protected def btnSaveClick(): Unit = {

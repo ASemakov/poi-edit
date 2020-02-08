@@ -14,6 +14,8 @@ import desktop.model.UiPoint
 import desktop.utils.converters._
 import desktop.utils.{OptionComparator, WindowUtils}
 import model.{PointSource, PointType, TrustLevel}
+import repository.{PointSourceRepository, PointTypeRepository, TrustLevelRepository}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 private class ButtonTableCell[S, T] extends TableCell[S, T]{
   val cellButton: Button  = new Button()
@@ -67,6 +69,12 @@ class PointTable[T <: UiPoint] extends TableView[T] {
   def setSources(ts: Seq[PointSource]) = {
     val items = None :: ts.map(Option(_)).toList
     tableColumnSource.setCellFactory(ComboBoxTableCell.forTableColumn(new OptionIdNameStringConverter[PointSource], items: _*))
+  }
+
+  def initDropdowns() = {
+    PointTypeRepository().all().foreach(setPointTypes)
+    TrustLevelRepository().all().foreach(setTrustLevels)
+    PointSourceRepository().all().foreach(setSources)
   }
 
   @FXML
