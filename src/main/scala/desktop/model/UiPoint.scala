@@ -15,13 +15,13 @@ class UiPoint
   val descriptionProperty: SimpleObjectProperty[Option[String]],
   val pointtypeProperty: SimpleObjectProperty[PointType],
   val trustlevelProperty: SimpleObjectProperty[TrustLevel],
-  val source: SimpleObjectProperty[Option[PointSource]],
+  val sourceProperty: SimpleObjectProperty[Option[PointSource]],
   val dataidProperty: SimpleObjectProperty[Option[Int]]
 ) {
 
   private def currentValues = (
     nameProperty.get(), latProperty.get(), lonProperty.get(), altitudeProperty.get(), precisionProperty.get(),
-    descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), source.get(), dataidProperty.get()
+    descriptionProperty.get(), pointtypeProperty.get(), trustlevelProperty.get(), sourceProperty.get(), dataidProperty.get()
   )
 
   private val original = currentValues
@@ -32,7 +32,7 @@ class UiPoint
 
   def asPoint: Point = Point(idProperty.get(), nameProperty.get(), latProperty.get, lonProperty.get(),
     altitudeProperty.get(), precisionProperty.get(), descriptionProperty.get(), pointtypeProperty.get().id.get,
-    trustlevelProperty.get().id.get, dataidProperty.get(), None)
+    trustlevelProperty.get().id.get, sourceProperty.get().map(_.id.get), dataidProperty.get())
 }
 
 object UiPoint {

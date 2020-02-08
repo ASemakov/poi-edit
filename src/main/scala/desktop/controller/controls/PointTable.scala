@@ -80,6 +80,7 @@ class PointTable[T <: UiPoint] extends TableView[T] {
   @FXML
   def initialize() = {
     getSelectionModel.setSelectionMode(SelectionMode.MULTIPLE)
+    getSelectionModel.setCellSelectionEnabled(true)
 
     tableColumnId.setCellValueFactory(_.getValue.idProperty)
     tableColumnId.setCellFactory(TextFieldTableCell.forTableColumn(new OptionIntConverter))
@@ -108,7 +109,7 @@ class PointTable[T <: UiPoint] extends TableView[T] {
 
     tableColumnPointtype.setCellValueFactory(_.getValue.pointtypeProperty)
     tableColumnTrustlevel.setCellValueFactory(_.getValue.trustlevelProperty)
-    tableColumnSource.setCellValueFactory(_.getValue.source)
+    tableColumnSource.setCellValueFactory(_.getValue.sourceProperty)
 
     tableColumnDataid.setCellValueFactory(_.getValue.dataidProperty)
     tableColumnDataid.setCellFactory(tc => {

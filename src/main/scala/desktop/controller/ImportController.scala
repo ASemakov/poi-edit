@@ -8,6 +8,8 @@ import desktop.controller.controls.{PointDistantiatedTable, PointTable}
 import desktop.model.{UiPoint, UiPointDistantiated}
 import desktop.utils.{FileChoosers, WindowUtils}
 import javafx.application.Platform
+import javafx.geometry.Orientation
+import javafx.scene.control.SplitPane
 import repository.{GPXRepository, PointRepository, PointSourceRepository, PointTypeRepository, TrustLevelRepository}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,7 +20,7 @@ class ImportController {
   @FXML private var mainPane: AnchorPane = _
   @FXML private var tableGpx: PointTable[UiPoint] = _
   @FXML private var tableMatch: PointDistantiatedTable = _
-
+  @FXML private var splitMain: SplitPane = _
 
   def stage: Stage = mainPane.getScene.getWindow.asInstanceOf[Stage]
 
@@ -89,6 +91,10 @@ class ImportController {
     val items = tableGpx.getSelectionModel.getSelectedItems.toArray(new Array[UiPoint](tableGpx.getSelectionModel.getSelectedItems.size()))
     items.foreach(tableGpx.getItems.remove)
   }
+
+  def onSplitSwitch (): Unit = splitMain.setOrientation(
+    if(splitMain.getOrientation == Orientation.HORIZONTAL) Orientation.VERTICAL else Orientation.HORIZONTAL
+  )
 
   @FXML
   protected def initialize(): Unit = {
