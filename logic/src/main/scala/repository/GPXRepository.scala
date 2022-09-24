@@ -14,8 +14,15 @@ import scalaxb._
 
 case class GPXRepository(file: File) {
   private def readGpx = {
-    val xml = XML.loadFile(file)
-    fromXML[GpxType](xml)
+    try {
+      val xml = XML.loadFile(file)
+      fromXML[GpxType](xml)
+    } catch {
+      case e: Exception => {
+        println(e)
+        GpxType(null, Seq.empty)
+      }
+    }
   }
 
   def readWpt(): Seq[Point] = {
@@ -26,7 +33,7 @@ case class GPXRepository(file: File) {
   def writeWpt(points: Seq[Point]): Unit = {
     val gpx = GpxType(
       metadata = Some(MetadataType(
-        time = Some(DatatypeFactory.newInstance.newXMLGregorianCalendar(LocalDate.now.toString)),
+//        time = Some(DatatypeFactory.newInstance.newXMLGregorianCalendar(LocalDate.now.toString)),
         bounds = Some(BoundsType(attributes = Map[String, scalaxb.DataRecord[Any]](
           "@minlat" -> DataRecord(points.map(_.lat).min),
           "@minlon" -> DataRecord(points.map(_.lon).min),
@@ -41,10 +48,17 @@ case class GPXRepository(file: File) {
           "@lat" -> DataRecord(x.lat),
           "@lon" -> DataRecord(x.lon)
         )
-      ))
+      )),
+      attributes = Map[String, scalaxb.DataRecord[Any]](
+        "@version" -> DataRecord("1.1"),
+        "@creator" -> DataRecord("creator")
+      )
     )
     val xml = toXML[GpxType](gpx, "gpx", defaultScope)
-    XML.save(file.getAbsolutePath, xml.head, "utf-8", xmlDecl = true, null)
+
+    val printer = new scala.xml.PrettyPrinter(800, 2)
+
+    XML.save(file.getAbsolutePath, XML.loadString(printer.format(xml.head)) , "utf-8", xmlDecl = true, null)
   }
 
   def readTrk(): Seq[(Track, Seq[TrackPoint])] = {
